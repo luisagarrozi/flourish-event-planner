@@ -1,50 +1,57 @@
 import { PageHeader } from "@/components/page-header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { 
   Calendar, 
   CheckCircle, 
-  DollarSign, 
   Users, 
   Heart,
   CalendarDays,
   Plus
 } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { t } from "@/lib/translations"
+import { useParams } from "react-router-dom"
+import { getEvent } from "@/services/events"
 
 export default function Dashboard() {
+  const { id } = useParams();
   const [weddingInfo, setWeddingInfo] = useState({
     brideName: "",
     groomName: "",
     weddingDate: "",
   })
 
+  useEffect(() => {
+    if (!id) return;
+    getEvent(id).then((evt) => {
+      if (!evt) return;
+      setWeddingInfo({
+        brideName: evt.bride_name ?? "",
+        groomName: evt.groom_name ?? "",
+        weddingDate: evt.wedding_date ?? "",
+      })
+    })
+  }, [id])
+
   const stats = [
     {
-      title: "Days Until Wedding",
+      title: t("daysUntilWedding"),
       value: "127",
       icon: Calendar,
       color: "text-primary",
       bg: "bg-primary-soft"
     },
     {
-      title: "Tasks Completed",
+      title: t("tasksCompleted"),
       value: "24/45",
       icon: CheckCircle,
       color: "text-green-600",
       bg: "bg-green-50"
     },
     {
-      title: "Budget Used",
-      value: "$12,500",
-      icon: DollarSign,
-      color: "text-blue-600",
-      bg: "bg-blue-50"
-    },
-    {
-      title: "Guests RSVP'd",
+      title: t("guestsRSVPd"),
       value: "78/120",
       icon: Users,
       color: "text-purple-600",
@@ -53,17 +60,17 @@ export default function Dashboard() {
   ]
 
   const recentTasks = [
-    { id: 1, title: "Book wedding venue", completed: true, dueDate: "2024-02-15" },
-    { id: 2, title: "Send save the dates", completed: true, dueDate: "2024-02-20" },
-    { id: 3, title: "Order wedding dress", completed: false, dueDate: "2024-03-01" },
-    { id: 4, title: "Book photographer", completed: false, dueDate: "2024-03-05" },
+    { id: 1, title: t("bookWeddingVenue"), completed: true, dueDate: "2024-02-15" },
+    { id: 2, title: t("sendSaveTheDates"), completed: true, dueDate: "2024-02-20" },
+    { id: 3, title: t("orderWeddingDress"), completed: false, dueDate: "2024-03-01" },
+    { id: 4, title: t("bookPhotographer"), completed: false, dueDate: "2024-03-05" },
   ]
 
   return (
     <div className="min-h-screen bg-gradient-warm">
       <PageHeader 
-        title="Wedding Planner Dashboard" 
-        subtitle="Welcome to your wedding planning central hub"
+        title={t("weddingPlannerDashboard")} 
+        subtitle={t("welcomeToYourWeddingPlanningCentralHub")}
       />
 
       <main className="p-6 space-y-8 animate-fade-in">
@@ -72,16 +79,16 @@ export default function Dashboard() {
           <CardHeader className="pb-4">
             <div className="flex items-center gap-2">
               <Heart className="h-5 w-5 text-primary" />
-              <CardTitle className="text-foreground">Welcome to Your Wedding Planner!</CardTitle>
+              <CardTitle className="text-foreground">{t("welcomeToYourWeddingPlanner")}</CardTitle>
             </div>
             <p className="text-muted-foreground text-sm">
-              Let's start by setting your wedding date in the settings below. This will help us create a personalized planning timeline for you.
+              {t("welcomeDescription")}
             </p>
           </CardHeader>
         </Card>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {stats.map((stat, index) => (
             <Card key={stat.title} className="shadow-card border-0 hover:shadow-elegant transition-all duration-300 animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
               <CardContent className="p-6">
@@ -107,63 +114,38 @@ export default function Dashboard() {
           {/* Wedding Information */}
           <Card className="shadow-card border-0">
             <CardHeader className="pb-4">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg font-semibold text-foreground">Wedding Information</CardTitle>
-                <Button variant="outline" size="sm" className="text-primary border-primary hover:bg-primary hover:text-primary-foreground">
-                  Clear All Data
-                </Button>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Enter the couple's names and wedding date.
-              </p>
+              <CardTitle className="text-lg font-semibold text-foreground">{t("weddingInformation")}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="brideName" className="text-sm font-medium">
-                    Bride's Name
+                  <Label className="text-sm font-medium text-muted-foreground">
+                    {t("bridesName")}
                   </Label>
-                  <Input
-                    id="brideName"
-                    placeholder="Enter bride's name"
-                    value={weddingInfo.brideName}
-                    onChange={(e) => setWeddingInfo(prev => ({ ...prev, brideName: e.target.value }))}
-                    className="transition-smooth focus:shadow-soft"
-                  />
+                  <div className="p-3 bg-muted/30 rounded-md">
+                    <p className="text-foreground">{weddingInfo.brideName || t("notSpecified")}</p>
+                  </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="groomName" className="text-sm font-medium">
-                    Groom's Name
+                  <Label className="text-sm font-medium text-muted-foreground">
+                    {t("groomsName")}
                   </Label>
-                  <Input
-                    id="groomName"
-                    placeholder="Enter groom's name"
-                    value={weddingInfo.groomName}
-                    onChange={(e) => setWeddingInfo(prev => ({ ...prev, groomName: e.target.value }))}
-                    className="transition-smooth focus:shadow-soft"
-                  />
+                  <div className="p-3 bg-muted/30 rounded-md">
+                    <p className="text-foreground">{weddingInfo.groomName || t("notSpecified")}</p>
+                  </div>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="weddingDate" className="text-sm font-medium">
-                  Wedding Date
+                <Label className="text-sm font-medium text-muted-foreground">
+                  {t("weddingDate")}
                 </Label>
-                <div className="relative">
-                  <Input
-                    id="weddingDate"
-                    type="date"
-                    value={weddingInfo.weddingDate}
-                    onChange={(e) => setWeddingInfo(prev => ({ ...prev, weddingDate: e.target.value }))}
-                    className="transition-smooth focus:shadow-soft"
-                  />
-                  <CalendarDays className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <div className="p-3 bg-muted/30 rounded-md">
+                  <p className="text-foreground">
+                    {weddingInfo.weddingDate ? new Date(weddingInfo.weddingDate).toLocaleDateString('pt-BR') : t("notSpecified")}
+                  </p>
                 </div>
               </div>
-
-              <Button className="w-full gradient-primary text-white font-medium hover:shadow-elegant transition-all duration-300">
-                Save All Information
-              </Button>
             </CardContent>
           </Card>
 
@@ -171,10 +153,10 @@ export default function Dashboard() {
           <Card className="shadow-card border-0">
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg font-semibold text-foreground">Recent Tasks</CardTitle>
+                <CardTitle className="text-lg font-semibold text-foreground">{t("recentTasks")}</CardTitle>
                 <Button size="sm" className="gradient-primary text-white hover:shadow-elegant">
                   <Plus className="h-4 w-4 mr-2" />
-                  Add Task
+                  {t("addTask")}
                 </Button>
               </div>
             </CardHeader>
@@ -198,7 +180,7 @@ export default function Dashboard() {
                         {task.title}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        Due: {new Date(task.dueDate).toLocaleDateString()}
+                        {t("due")}: {new Date(task.dueDate).toLocaleDateString('pt-BR')}
                       </p>
                     </div>
                   </div>

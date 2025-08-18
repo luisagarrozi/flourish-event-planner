@@ -2,15 +2,16 @@ import { PageHeader } from "@/components/page-header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, Plus, Calendar, Flag } from "lucide-react"
+import { t } from "@/lib/translations"
 
 export default function Tasks() {
   const tasks = [
-    { id: 1, title: "Book wedding venue", completed: true, priority: "high", dueDate: "2024-02-15", category: "Venue" },
-    { id: 2, title: "Send save the dates", completed: true, priority: "medium", dueDate: "2024-02-20", category: "Invitations" },
-    { id: 3, title: "Order wedding dress", completed: false, priority: "high", dueDate: "2024-03-01", category: "Attire" },
-    { id: 4, title: "Book photographer", completed: false, priority: "high", dueDate: "2024-03-05", category: "Photography" },
-    { id: 5, title: "Choose wedding cake", completed: false, priority: "medium", dueDate: "2024-03-10", category: "Catering" },
-    { id: 6, title: "Book DJ/Band", completed: false, priority: "medium", dueDate: "2024-03-15", category: "Entertainment" },
+    { id: 1, title: t("bookWeddingVenue"), completed: true, priority: "high", dueDate: "2024-02-15", category: t("venue") },
+    { id: 2, title: t("sendSaveTheDates"), completed: true, priority: "medium", dueDate: "2024-02-20", category: t("invitations") },
+    { id: 3, title: t("orderWeddingDress"), completed: false, priority: "high", dueDate: "2024-03-01", category: t("attire") },
+    { id: 4, title: t("bookPhotographer"), completed: false, priority: "high", dueDate: "2024-03-05", category: t("photography") },
+    { id: 5, title: t("chooseWeddingCake"), completed: false, priority: "medium", dueDate: "2024-03-10", category: t("catering") },
+    { id: 6, title: t("bookDJBand"), completed: false, priority: "medium", dueDate: "2024-03-15", category: t("entertainment") },
   ]
 
   const getPriorityColor = (priority: string) => {
@@ -22,15 +23,24 @@ export default function Tasks() {
     }
   }
 
+  const getPriorityText = (priority: string) => {
+    switch (priority) {
+      case "high": return t("high")
+      case "medium": return t("medium")
+      case "low": return t("low")
+      default: return priority
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-warm">
       <PageHeader 
-        title="Tasks" 
-        subtitle="Keep track of your wedding planning progress"
+        title={t("tasks")} 
+        subtitle={t("keepTrackOfYourWeddingPlanningProgress")}
       >
         <Button className="gradient-primary text-white hover:shadow-elegant">
           <Plus className="h-4 w-4 mr-2" />
-          Add Task
+          {t("addTask")}
         </Button>
       </PageHeader>
 
@@ -41,7 +51,7 @@ export default function Tasks() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground mb-1">
-                    Total Tasks
+                    {t("totalTasks")}
                   </p>
                   <p className="text-2xl font-bold text-foreground">
                     {tasks.length}
@@ -59,7 +69,7 @@ export default function Tasks() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground mb-1">
-                    Completed
+                    {t("completed")}
                   </p>
                   <p className="text-2xl font-bold text-foreground">
                     {tasks.filter(t => t.completed).length}
@@ -77,7 +87,7 @@ export default function Tasks() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground mb-1">
-                    Remaining
+                    {t("remaining")}
                   </p>
                   <p className="text-2xl font-bold text-foreground">
                     {tasks.filter(t => !t.completed).length}
@@ -93,7 +103,7 @@ export default function Tasks() {
 
         <Card className="shadow-card border-0">
           <CardHeader>
-            <CardTitle>All Tasks</CardTitle>
+            <CardTitle>{t("allTasks")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -127,7 +137,7 @@ export default function Tasks() {
                       <div className="flex items-center gap-1">
                         <Calendar className="h-3 w-3 text-muted-foreground" />
                         <span className="text-xs text-muted-foreground">
-                          {new Date(task.dueDate).toLocaleDateString()}
+                          {new Date(task.dueDate).toLocaleDateString('pt-BR')}
                         </span>
                       </div>
                     </div>
@@ -135,7 +145,7 @@ export default function Tasks() {
 
                   <div className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getPriorityColor(task.priority)}`}>
                     <Flag className="h-3 w-3 inline mr-1" />
-                    {task.priority}
+                    {getPriorityText(task.priority)}
                   </div>
                 </div>
               ))}

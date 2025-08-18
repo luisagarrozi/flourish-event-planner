@@ -2,7 +2,6 @@ import { useState } from "react"
 import { 
   LayoutDashboard, 
   CheckSquare, 
-  DollarSign, 
   Users, 
   Calendar, 
   Heart,
@@ -10,6 +9,7 @@ import {
   LogOut
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
+import { t } from "@/lib/translations"
 
 import {
   Sidebar,
@@ -26,12 +26,11 @@ import {
 } from "@/components/ui/sidebar"
 
 const items = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard },
-  { title: "Tasks", url: "/tasks", icon: CheckSquare },
-  { title: "Budget", url: "/budget", icon: DollarSign },
-  { title: "Guest List", url: "/guests", icon: Users },
-  { title: "Timeline", url: "/timeline", icon: Calendar },
-  { title: "Vendors", url: "/vendors", icon: Heart },
+  { title: t("events"), url: "/", icon: LayoutDashboard },
+  { title: t("tasks"), url: "/tasks", icon: CheckSquare },
+  { title: t("guestList"), url: "/guests", icon: Users },
+  { title: t("timeline"), url: "/timeline", icon: Calendar },
+  { title: t("vendors"), url: "/vendors", icon: Heart },
 ]
 
 export function AppSidebar() {
@@ -57,9 +56,9 @@ export function AppSidebar() {
               </div>
               <div>
                 <h2 className="font-serif text-lg font-semibold text-foreground">
-                  Wedding Planner
+                  {t("weddingPlanner")}
                 </h2>
-                <p className="text-xs text-muted-foreground">Pro</p>
+                <p className="text-xs text-muted-foreground">{t("pro")}</p>
               </div>
             </div>
           ) : (
@@ -73,7 +72,7 @@ export function AppSidebar() {
           className="px-3 py-4"
         >
           <SidebarGroupLabel className={`${collapsed ? "sr-only" : ""} text-warm-gray font-medium text-xs uppercase tracking-wider mb-2`}>
-            Main Navigation
+            {t("mainNavigation")}
           </SidebarGroupLabel>
 
           <SidebarGroupContent>
@@ -112,7 +111,7 @@ export function AppSidebar() {
               <SidebarMenuButton asChild>
                 <button className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-warm-gray hover:bg-accent hover:text-accent-foreground transition-all duration-200 w-full text-left">
                   <Settings className="h-4 w-4 shrink-0" />
-                  {!collapsed && <span className="font-medium text-sm">Settings</span>}
+                  {!collapsed && <span className="font-medium text-sm">{t("settings")}</span>}
                 </button>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -120,7 +119,7 @@ export function AppSidebar() {
               <SidebarMenuButton asChild>
                 <button className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-warm-gray hover:bg-destructive hover:text-destructive-foreground transition-all duration-200 w-full text-left">
                   <LogOut className="h-4 w-4 shrink-0" />
-                  {!collapsed && <span className="font-medium text-sm">Logout</span>}
+                  {!collapsed && <span className="font-medium text-sm">{t("logout")}</span>}
                 </button>
               </SidebarMenuButton>
             </SidebarMenuItem>

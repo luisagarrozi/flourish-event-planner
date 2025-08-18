@@ -1,16 +1,17 @@
 import { PageHeader } from "@/components/page-header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
+import { t } from "@/lib/translations"
 
 export default function Budget() {
   const budgetItems = [
-    { category: "Venue", estimated: 8000, actual: 7500, percentage: 35 },
-    { category: "Catering", estimated: 6000, actual: 5800, percentage: 27 },
-    { category: "Photography", estimated: 3000, actual: 0, percentage: 14 },
-    { category: "Flowers", estimated: 2000, actual: 0, percentage: 9 },
-    { category: "Music/DJ", estimated: 1500, actual: 0, percentage: 7 },
-    { category: "Attire", estimated: 1500, actual: 800, percentage: 7 },
-    { category: "Miscellaneous", estimated: 500, actual: 150, percentage: 2 },
+    { category: t("venue"), estimated: 8000, actual: 7500, percentage: 35 },
+    { category: t("catering"), estimated: 6000, actual: 5800, percentage: 27 },
+    { category: t("photography"), estimated: 3000, actual: 0, percentage: 14 },
+    { category: t("flowers"), estimated: 2000, actual: 0, percentage: 9 },
+    { category: t("musicDJ"), estimated: 1500, actual: 0, percentage: 7 },
+    { category: t("attire"), estimated: 1500, actual: 800, percentage: 7 },
+    { category: t("miscellaneous"), estimated: 500, actual: 150, percentage: 2 },
   ]
 
   const totalBudget = 22500
@@ -20,8 +21,8 @@ export default function Budget() {
   return (
     <div className="min-h-screen bg-gradient-warm">
       <PageHeader 
-        title="Budget" 
-        subtitle="Track your wedding expenses and stay on budget"
+        title={t("budget")} 
+        subtitle={t("trackYourWeddingExpensesAndStayOnBudget")}
       />
 
       <main className="p-6 space-y-6 animate-fade-in">
@@ -31,10 +32,10 @@ export default function Budget() {
             <CardContent className="p-6">
               <div className="text-center">
                 <p className="text-sm font-medium text-muted-foreground mb-2">
-                  Total Budget
+                  {t("totalBudget")}
                 </p>
                 <p className="text-3xl font-bold text-foreground">
-                  ${totalBudget.toLocaleString()}
+                  R$ {totalBudget.toLocaleString('pt-BR')}
                 </p>
               </div>
             </CardContent>
@@ -44,10 +45,10 @@ export default function Budget() {
             <CardContent className="p-6">
               <div className="text-center">
                 <p className="text-sm font-medium text-muted-foreground mb-2">
-                  Amount Spent
+                  {t("amountSpent")}
                 </p>
                 <p className="text-3xl font-bold text-primary">
-                  ${totalSpent.toLocaleString()}
+                  R$ {totalSpent.toLocaleString('pt-BR')}
                 </p>
               </div>
             </CardContent>
@@ -57,10 +58,10 @@ export default function Budget() {
             <CardContent className="p-6">
               <div className="text-center">
                 <p className="text-sm font-medium text-muted-foreground mb-2">
-                  Remaining
+                  {t("remaining")}
                 </p>
                 <p className="text-3xl font-bold text-green-600">
-                  ${(totalBudget - totalSpent).toLocaleString()}
+                  R$ {(totalBudget - totalSpent).toLocaleString('pt-BR')}
                 </p>
               </div>
             </CardContent>
@@ -70,13 +71,13 @@ export default function Budget() {
         {/* Budget Progress */}
         <Card className="shadow-card border-0">
           <CardHeader>
-            <CardTitle>Budget Overview</CardTitle>
+            <CardTitle>{t("budgetOverview")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between text-sm mb-2">
-                  <span>Budget Used</span>
+                  <span>{t("budgetUsed")}</span>
                   <span>{Math.round((totalSpent / totalBudget) * 100)}%</span>
                 </div>
                 <Progress value={(totalSpent / totalBudget) * 100} className="h-3" />
@@ -88,7 +89,7 @@ export default function Budget() {
         {/* Budget Breakdown */}
         <Card className="shadow-card border-0">
           <CardHeader>
-            <CardTitle>Budget Breakdown</CardTitle>
+            <CardTitle>{t("budgetBreakdown")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
@@ -98,10 +99,10 @@ export default function Budget() {
                     <h3 className="font-medium text-foreground">{item.category}</h3>
                     <div className="text-right">
                       <p className="text-sm font-medium">
-                        ${item.actual.toLocaleString()} / ${item.estimated.toLocaleString()}
+                        R$ {item.actual.toLocaleString('pt-BR')} / R$ {item.estimated.toLocaleString('pt-BR')}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {item.percentage}% of total budget
+                        {item.percentage}% {t("ofTotalBudget")}
                       </p>
                     </div>
                   </div>
@@ -111,10 +112,10 @@ export default function Budget() {
                   />
                   <div className="flex justify-between text-xs text-muted-foreground">
                     <span>
-                      {item.actual > 0 ? `${Math.round((item.actual / item.estimated) * 100)}% used` : 'Not started'}
+                      {item.actual > 0 ? `${Math.round((item.actual / item.estimated) * 100)}% ${t("used")}` : t("notStarted")}
                     </span>
                     <span>
-                      ${(item.estimated - item.actual).toLocaleString()} remaining
+                      R$ {(item.estimated - item.actual).toLocaleString('pt-BR')} {t("remaining")}
                     </span>
                   </div>
                 </div>

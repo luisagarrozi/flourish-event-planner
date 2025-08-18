@@ -2,6 +2,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Bell, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { t } from "@/lib/translations"
 
 interface PageHeaderProps {
   title: string
@@ -28,7 +29,7 @@ export function PageHeader({ title, subtitle, children }: PageHeaderProps) {
           <div className="relative hidden md:block">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search..."
+              placeholder={t("search")}
               className="w-64 pl-9 bg-muted/50 border-0 focus-visible:ring-1"
             />
           </div>

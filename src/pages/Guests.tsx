@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Plus, Users, Check, X, Clock } from "lucide-react"
+import { t } from "@/lib/translations"
 
 export default function Guests() {
   const guests = [
@@ -21,25 +22,25 @@ export default function Guests() {
   const getRsvpBadge = (rsvp: string) => {
     switch (rsvp) {
       case "attending":
-        return <Badge className="bg-green-100 text-green-800 hover:bg-green-100"><Check className="w-3 h-3 mr-1" />Attending</Badge>
+        return <Badge className="bg-green-100 text-green-800 hover:bg-green-100"><Check className="w-3 h-3 mr-1" />{t("attending")}</Badge>
       case "declined":
-        return <Badge className="bg-red-100 text-red-800 hover:bg-red-100"><X className="w-3 h-3 mr-1" />Declined</Badge>
+        return <Badge className="bg-red-100 text-red-800 hover:bg-red-100"><X className="w-3 h-3 mr-1" />{t("declined")}</Badge>
       case "pending":
-        return <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100"><Clock className="w-3 h-3 mr-1" />Pending</Badge>
+        return <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100"><Clock className="w-3 h-3 mr-1" />{t("pending")}</Badge>
       default:
-        return <Badge variant="secondary">Unknown</Badge>
+        return <Badge variant="secondary">{t("unknown")}</Badge>
     }
   }
 
   return (
     <div className="min-h-screen bg-gradient-warm">
       <PageHeader 
-        title="Guest List" 
-        subtitle="Manage your wedding guest list and RSVPs"
+        title={t("guestList")} 
+        subtitle={t("manageYourWeddingGuestListAndRSVPs")}
       >
         <Button className="gradient-primary text-white hover:shadow-elegant">
           <Plus className="h-4 w-4 mr-2" />
-          Add Guest
+          {t("addGuest")}
         </Button>
       </PageHeader>
 
@@ -51,7 +52,7 @@ export default function Guests() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground mb-1">
-                    Total Guests
+                    {t("totalGuests")}
                   </p>
                   <p className="text-2xl font-bold text-foreground">
                     {guests.length}
@@ -69,7 +70,7 @@ export default function Guests() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground mb-1">
-                    Attending
+                    {t("attending")}
                   </p>
                   <p className="text-2xl font-bold text-green-600">
                     {attendingCount}
@@ -87,7 +88,7 @@ export default function Guests() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground mb-1">
-                    Pending
+                    {t("pending")}
                   </p>
                   <p className="text-2xl font-bold text-yellow-600">
                     {pendingCount}
@@ -105,7 +106,7 @@ export default function Guests() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground mb-1">
-                    Declined
+                    {t("declined")}
                   </p>
                   <p className="text-2xl font-bold text-red-600">
                     {declinedCount}
@@ -122,7 +123,7 @@ export default function Guests() {
         {/* Guest List */}
         <Card className="shadow-card border-0">
           <CardHeader>
-            <CardTitle>All Guests</CardTitle>
+            <CardTitle>{t("allGuests")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
