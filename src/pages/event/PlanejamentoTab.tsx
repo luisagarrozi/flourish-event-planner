@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
-import { listTasks, createTask, updateTask, deleteTask } from "@/services/tasks";
+import { listTasks, createTask, createTasksBatch, updateTask, deleteTask } from "@/services/tasks";
 import type { Tables } from "@/integrations/supabase/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,101 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { t } from "@/lib/translations";
-import { Plus, Trash2, Check, Edit2, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { Plus, Trash2, Check, Edit2, ArrowUpDown, ArrowUp, ArrowDown, Calendar, Sparkles } from "lucide-react";
+
+// Preset tasks data
+const PRESET_TASKS = [
+	// 12 meses antes
+	{ title: "Escolher Espaço Cerimônia", monthsBefore: 12, category: "Local" },
+	{ title: "Escolher Espaço da Recepção e Festa", monthsBefore: 12, category: "Local" },
+	{ title: "Escolher Buffet", monthsBefore: 12, category: "Alimentação" },
+	{ title: "Fazer Site", monthsBefore: 12, category: "Digital" },
+	{ title: "Contratar Assessoria e Cerimonial", monthsBefore: 12, category: "Serviços" },
+	{ title: "Alimentação Staffs", monthsBefore: 12, category: "Alimentação" },
+	
+	// 11 meses antes
+	{ title: "Contratar Decoração", monthsBefore: 11, category: "Decoração" },
+	
+	// 10 meses antes
+	{ title: "Contratar Fotografia", monthsBefore: 10, category: "Fotografia" },
+	{ title: "Contratar Filmagem", monthsBefore: 10, category: "Filmagem" },
+	
+	// 9 meses antes
+	{ title: "Contratar Músicos para Cerimônia", monthsBefore: 9, category: "Música" },
+	{ title: "Contratar DJ", monthsBefore: 9, category: "Música" },
+	{ title: "Alugar Vestido", monthsBefore: 9, category: "Vestuário" },
+	{ title: "Maquiagem e Cabelo", monthsBefore: 9, category: "Beleza" },
+	{ title: "Contratar Pista de Led", monthsBefore: 9, category: "Decoração" },
+	{ title: "Contratar Telão", monthsBefore: 9, category: "Tecnologia" },
+	
+	// 8 meses antes
+	{ title: "Contratar Banda", monthsBefore: 8, category: "Música" },
+	{ title: "Contratar Celebrante", monthsBefore: 8, category: "Cerimônia" },
+	
+	// 7 meses antes
+	{ title: "Alugar Acessórios", monthsBefore: 7, category: "Vestuário" },
+	{ title: "Contratar Doces", monthsBefore: 7, category: "Alimentação" },
+	{ title: "Contratar Bolo", monthsBefore: 7, category: "Alimentação" },
+	{ title: "Contratar Bolo Fake", monthsBefore: 7, category: "Alimentação" },
+	{ title: "Contratar Bartender", monthsBefore: 7, category: "Alimentação" },
+	
+	// 6 meses antes
+	{ title: "Contratar Bebidas e Garçons", monthsBefore: 6, category: "Alimentação" },
+	{ title: "Contratar Bem-Casados", monthsBefore: 6, category: "Alimentação" },
+	{ title: "Traje Noivo", monthsBefore: 6, category: "Vestuário" },
+	{ title: "Entrega Convites", monthsBefore: 6, category: "Convites" },
+	{ title: "Fazer lista presentes Site", monthsBefore: 6, category: "Digital" },
+	
+	// 5 meses antes
+	{ title: "Contratar Iluminação", monthsBefore: 5, category: "Decoração" },
+	{ title: "Contratar Animação", monthsBefore: 5, category: "Entretenimento" },
+	{ title: "Tenda", monthsBefore: 5, category: "Local" },
+	
+	// 4 meses antes
+	{ title: "Contratar Carro para Noiva", monthsBefore: 4, category: "Transporte" },
+	{ title: "Comprar Lembrancinhas", monthsBefore: 4, category: "Lembrancinhas" },
+	{ title: "Contratar Gerador de Energia", monthsBefore: 4, category: "Infraestrutura" },
+	{ title: "Contratar Recreadores", monthsBefore: 4, category: "Entretenimento" },
+	
+	// 3 meses antes
+	{ title: "Comprar Chinelos", monthsBefore: 3, category: "Vestuário" },
+	{ title: "Contratar Lanche da Madrugada", monthsBefore: 3, category: "Alimentação" },
+	{ title: "Aluguel de Louças", monthsBefore: 3, category: "Infraestrutura" },
+	{ title: "Marcar Pré Wedding", monthsBefore: 3, category: "Fotografia" },
+	{ title: "Degustações", monthsBefore: 3, category: "Alimentação" },
+	{ title: "Entrega Convites Convidados", monthsBefore: 3, category: "Convites" },
+	{ title: "Reservar Hotel Perto do Local da Cerimônia", monthsBefore: 3, category: "Hospedagem" },
+	
+	// 2 meses antes
+	{ title: "Contratar Papelaria", monthsBefore: 2, category: "Papelaria" },
+	{ title: "Comprar Porta Aliança", monthsBefore: 2, category: "Cerimônia" },
+	{ title: "Comprar Topo de Bolo", monthsBefore: 2, category: "Decoração" },
+	{ title: "Contratar Coreógrafa", monthsBefore: 2, category: "Entretenimento" },
+	{ title: "Escolher Modelo Bouquet", monthsBefore: 2, category: "Decoração" },
+	
+	// 1 mês antes
+	{ title: "Comprar Saída Igreja", monthsBefore: 1, category: "Vestuário" },
+	{ title: "Kit Toilet", monthsBefore: 1, category: "Beleza" },
+	{ title: "Barbeiro", monthsBefore: 1, category: "Beleza" },
+	{ title: "Comprar ou Polir Alianças", monthsBefore: 1, category: "Cerimônia" },
+	{ title: "Fazer Lista e Importar Pro Site", monthsBefore: 1, category: "Digital" },
+	{ title: "Contratar Serviços Gerais", monthsBefore: 1, category: "Serviços" },
+	{ title: "Contratar Seguranças", monthsBefore: 1, category: "Segurança" },
+	{ title: "Fazer Mapa de Mesa", monthsBefore: 1, category: "Organização" },
+	{ title: "Escolher Músicas Principais", monthsBefore: 1, category: "Música" },
+	{ title: "Escolher Ordem de Padrinhos", monthsBefore: 1, category: "Cerimônia" },
+	
+	// 2 semanas antes
+	{ title: "Teste de Cabelo e Maquiagem", monthsBefore: 0.5, category: "Beleza" },
+];
+
+// Helper function to calculate date based on event date and months before
+const calculateDueDate = (eventDate: string, monthsBefore: number): string => {
+	const event = new Date(eventDate);
+	const dueDate = new Date(event);
+	dueDate.setMonth(event.getMonth() - monthsBefore);
+	return dueDate.toISOString().split('T')[0];
+};
 
 interface Props { 
 	weddingId: string;
@@ -35,6 +129,7 @@ export default function PlanejamentoTab({ weddingId, eventDate }: Props) {
 	// Simple state management for now
 	const [tasks, setTasks] = useState<Tables<'tasks'>[]>([]);
 	const [tasksLoading, setTasksLoading] = useState(false);
+	const [presetLoading, setPresetLoading] = useState(false);
 	
 	const fetchTasks = useCallback(async () => {
 		setTasksLoading(true);
@@ -181,6 +276,35 @@ export default function PlanejamentoTab({ weddingId, eventDate }: Props) {
 	const remove = async (task: Tables<'tasks'>) => {
 		await deleteTask(task.id);
 		refreshTasks();
+	};
+
+	const handlePresetTasks = async () => {
+		if (!eventDate) {
+			alert("É necessário definir uma data para o evento para usar as tarefas pré-definidas.");
+			return;
+		}
+
+		setPresetLoading(true);
+		try {
+			const tasksToCreate = PRESET_TASKS.map(preset => ({
+				title: preset.title,
+				due_date: calculateDueDate(eventDate, preset.monthsBefore),
+				priority: "medium" as const,
+				category: preset.category,
+				description: `Tarefa pré-definida: ${preset.title}`,
+				completed: false,
+			}));
+
+			const createdTasks = await createTasksBatch(weddingId, tasksToCreate);
+			if (createdTasks.length > 0) {
+				refreshTasks();
+			}
+		} catch (error) {
+			console.error("Error creating preset tasks:", error);
+			alert("Erro ao criar tarefas pré-definidas. Tente novamente.");
+		} finally {
+			setPresetLoading(false);
+		}
 	};
 
 	const getPriorityColor = (priority: string | null) => {
@@ -459,13 +583,28 @@ export default function PlanejamentoTab({ weddingId, eventDate }: Props) {
 									</svg>
 								</div>
 								<h3 className="text-lg font-medium text-gray-900 mb-2">Nenhuma tarefa encontrada</h3>
-								<p className="text-gray-500 mb-6">Clique em "Adicionar tarefa" para começar a organizar seu evento.</p>
-								<Button 
-									onClick={() => setIsAdding(true)} 
-									className="bg-gradient-to-r from-brand to-brand/80 text-white hover:from-brand/90 hover:to-brand/70 shadow-lg hover:shadow-xl transition-all duration-200"
-								>
-									<Plus className="h-4 w-4 mr-2" /> {t("addTask")}
-								</Button>
+								<p className="text-gray-500 mb-6">Escolha como você quer começar a organizar seu evento:</p>
+								<div className="flex flex-col sm:flex-row gap-3 justify-center">
+									<Button 
+										onClick={() => setIsAdding(true)} 
+										className="bg-gradient-to-r from-brand to-brand/80 text-white hover:from-brand/90 hover:to-brand/70 shadow-lg hover:shadow-xl transition-all duration-200"
+									>
+										<Plus className="h-4 w-4 mr-2" /> {t("addTask")}
+									</Button>
+									<Button 
+										onClick={handlePresetTasks}
+										disabled={presetLoading || !eventDate}
+										className="bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800 shadow-lg hover:shadow-xl transition-all duration-200"
+									>
+										<Sparkles className="h-4 w-4 mr-2" />
+										{presetLoading ? "Criando..." : t("startWithPreset")}
+									</Button>
+								</div>
+								{!eventDate && (
+									<p className="text-sm text-orange-600 mt-3">
+										⚠️ É necessário definir uma data para o evento para usar as tarefas pré-definidas.
+									</p>
+								)}
 							</div>
 						</div>
 					)}

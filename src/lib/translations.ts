@@ -78,6 +78,7 @@ export const translations = {
   cancelar: "Cancelar",
   gerenciar: "Gerenciar",
   atribuir: "Atribuir",
+  logout: "Sair",
 };
 
 export type TranslationKey = keyof typeof translations;

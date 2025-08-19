@@ -1,0 +1,6 @@
+<svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#D4AF37">
+    <!-- Diamond star shape -->
+    <path d="M50 5 C48 28 35 40 12 42 C35 44 48 56 50 95 C52 56 65 44 88 42 C65 40 52 28 50 5 Z" />
+  </g>
+</svg>
