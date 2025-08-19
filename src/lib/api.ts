@@ -55,6 +55,7 @@ export const api = {
   },
 
   async getEvent(id: string) {
+    console.log("🔍 API: getEvent called with id =", id);
     const user = await getCurrentUser();
     if (!user) throw new Error('Unauthorized');
     
@@ -62,6 +63,7 @@ export const api = {
       throw new Error('Rate limit exceeded');
     }
     
+    console.log("🔍 API: Making Supabase query for event");
     const { data, error } = await supabase
       .from('weddings')
       .select('*')
@@ -69,6 +71,7 @@ export const api = {
       .eq('user_id', user.id)
       .single();
     
+    console.log("🔍 API: Supabase response - data =", data, "error =", error);
     if (error) throw error;
     return data;
   },
@@ -98,6 +101,7 @@ export const api = {
 
   // Tasks
   async listTasks(weddingId: string) {
+    console.log("🔍 API: listTasks called with weddingId =", weddingId);
     const user = await getCurrentUser();
     if (!user) throw new Error('Unauthorized');
     
@@ -106,15 +110,18 @@ export const api = {
     }
     
     // Verify wedding ownership
+    console.log("🔍 API: Validating wedding access");
     const hasAccess = await validateWeddingAccess(weddingId, user.id);
     if (!hasAccess) throw new Error('Access denied');
     
+    console.log("🔍 API: Making Supabase query for tasks");
     const { data, error } = await supabase
       .from('tasks')
       .select('*')
       .eq('wedding_id', weddingId)
       .order('created_at', { ascending: false });
     
+    console.log("🔍 API: Supabase response - data =", data, "error =", error);
     if (error) throw error;
     return data;
   },
@@ -141,6 +148,40 @@ export const api = {
       .insert({ ...task, wedding_id: weddingId })
       .select()
       .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async createTasksBatch(weddingId: string, tasks: Omit<TablesInsert<'tasks'>, 'wedding_id'>[]) {
+    const user = await getCurrentUser();
+    if (!user) throw new Error('Unauthorized');
+    
+    if (!checkRateLimit(user.id)) {
+      throw new Error('Rate limit exceeded');
+    }
+    
+    // Verify wedding ownership
+    const hasAccess = await validateWeddingAccess(weddingId, user.id);
+    if (!hasAccess) throw new Error('Access denied');
+    
+    // Validation
+    if (!tasks.length) {
+      throw new Error('No tasks provided');
+    }
+    
+    for (const task of tasks) {
+      if (!task.title?.trim()) {
+        throw new Error('All tasks must have a title');
+      }
+    }
+    
+    const tasksWithWeddingId = tasks.map(task => ({ ...task, wedding_id: weddingId }));
+    
+    const { data, error } = await supabase
+      .from('tasks')
+      .insert(tasksWithWeddingId)
+      .select();
     
     if (error) throw error;
     return data;
@@ -351,5 +392,7 @@ export const api = {
     
     if (error) throw error;
     return true;
-  }
+  },
+
+
 };

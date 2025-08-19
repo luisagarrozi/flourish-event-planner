@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { listGuests, createGuest, deleteGuest } from "@/services/guests";
 import type { Tables } from "@/integrations/supabase/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,12 +18,12 @@ export default function GuestsTab({ weddingId }: Props) {
 	const [isAdding, setIsAdding] = useState(false);
 	const [form, setForm] = useState({ first_name: "", last_name: "", email: "" });
 
-	useEffect(() => { refresh(); }, [weddingId]);
-
-	const refresh = async () => {
+	const refresh = useCallback(async () => {
 		const data = await listGuests(weddingId);
 		setGuests(data);
-	};
+	}, [weddingId]);
+
+	useEffect(() => { refresh(); }, [refresh]);
 
 	const filtered = useMemo(() => {
 		const q = query.trim().toLowerCase();

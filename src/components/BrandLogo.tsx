@@ -21,12 +21,12 @@ export function BrandLogo({ size = 40, showText = true, className }: Props) {
           <path d="M50 5 C48 28 35 40 12 42 C35 44 48 56 50 95 C52 56 65 44 88 42 C65 40 52 28 50 5 Z" />
         </g>
       </svg>
-      {showText && (
-        <div style={{ lineHeight: 1 }}>
-          <div style={{ fontFamily: 'serif', letterSpacing: '0.06em' }} className="text-brand text-sm">ASSESSORIA</div>
-          <div style={{ fontFamily: 'serif', letterSpacing: '0.06em' }} className="text-brand text-lg">DIAMANTE</div>
-        </div>
-      )}
+             {showText && (
+         <div style={{ lineHeight: 1 }}>
+           <div style={{ fontFamily: 'Dancing Script, cursive', letterSpacing: '0.02em', fontWeight: '500' }} className="text-brand text-lg">Assessoria</div>
+           <div style={{ fontFamily: 'Dancing Script, cursive', letterSpacing: '0.02em', fontWeight: '500' }} className="text-brand text-xl">Diamante</div>
+         </div>
+       )}
     </div>
   );
 }

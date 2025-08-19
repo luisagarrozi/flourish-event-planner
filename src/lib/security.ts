@@ -58,7 +58,7 @@ export function checkActionRateLimit(userId: string, action: string, limit: numb
 }
 
 // Logging for security events
-export function logSecurityEvent(event: string, userId?: string, details?: any) {
+export function logSecurityEvent(event: string, userId?: string, details?: unknown) {
   console.warn(`[SECURITY] ${event}`, { userId, details, timestamp: new Date().toISOString() });
   // In production, send to your logging service
 }

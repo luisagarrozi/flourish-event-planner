@@ -250,6 +250,7 @@ export type Database = {
           },
         ]
       }
+
       weddings: {
         Row: {
           bride_name: string | null

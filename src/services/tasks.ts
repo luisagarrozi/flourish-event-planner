@@ -2,10 +2,13 @@ import { api } from "@/lib/api";
 import type { Tables, TablesInsert, TablesUpdate } from "@/integrations/supabase/types";
 
 export async function listTasks(weddingId: string): Promise<Tables<'tasks'>[]> {
+	console.log("🔍 tasks service: listTasks called with weddingId =", weddingId);
 	try {
-		return await api.listTasks(weddingId);
+		const result = await api.listTasks(weddingId);
+		console.log("🔍 tasks service: listTasks result =", result);
+		return result;
 	} catch (error) {
-		console.error("Error listing tasks:", error);
+		console.error("🔍 tasks service: Error listing tasks:", error);
 		return [];
 	}
 }
@@ -16,6 +19,15 @@ export async function createTask(weddingId: string, input: Omit<TablesInsert<'ta
 	} catch (error) {
 		console.error("Error creating task:", error);
 		return null;
+	}
+}
+
+export async function createTasksBatch(weddingId: string, inputs: Omit<TablesInsert<'tasks'>,'wedding_id'>[]): Promise<Tables<'tasks'>[]> {
+	try {
+		return await api.createTasksBatch(weddingId, inputs);
+	} catch (error) {
+		console.error("Error creating tasks batch:", error);
+		return [];
 	}
 }
 

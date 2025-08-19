@@ -6,7 +6,7 @@ import { Calendar, CheckSquare, Users, Home } from "lucide-react";
 import { t } from "@/lib/translations";
 import BrandLogo from "@/components/BrandLogo";
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
+type SidebarProps = React.HTMLAttributes<HTMLDivElement>
 
 export function AppSidebar({ className }: SidebarProps) {
 	const location = useLocation();

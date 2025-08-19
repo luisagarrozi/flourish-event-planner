@@ -4,7 +4,7 @@ import { getEvent } from "@/services/events";
 import type { Tables } from "@/integrations/supabase/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import TasksTab from "./event/TasksTab";
+import PlanejamentoTab from "./event/PlanejamentoTab";
 import GuestsTab from "./event/GuestsTab";
 import VendorsTab from "./event/VendorsTab";
 import { t } from "@/lib/translations";
@@ -15,9 +15,13 @@ export default function EventDetails() {
 
 	useEffect(() => {
 		if (!id) return;
-		getEvent(id).then(setEvent);
+		getEvent(id).then((result) => {
+			setEvent(result);
+		}).catch((error) => {
+			console.error("Error getting event:", error);
+		});
 	}, [id]);
-
+	
 	return (
 		<div className="p-6 space-y-6">
 			<div className="mb-6">
@@ -55,7 +59,7 @@ export default function EventDetails() {
 							</TabsList>
 						</div>
 						<TabsContent value="organization" className="p-4">
-							{event?.id && <TasksTab weddingId={event.id} />}
+							{event?.id && <PlanejamentoTab weddingId={event.id} eventDate={event.wedding_date} />}
 						</TabsContent>
 						<TabsContent value="guests" className="p-4">
 							{event?.id && <GuestsTab weddingId={event.id} />}

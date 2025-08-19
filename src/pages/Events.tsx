@@ -16,7 +16,7 @@ export default function Events() {
 	const [form, setForm] = useState({ bride_name: "", groom_name: "", wedding_date: "", venue: "" });
 	const [loading, setLoading] = useState(false);
 	const [showLoginModal, setShowLoginModal] = useState(false);
-	const [user, setUser] = useState<any>(null);
+	const [user, setUser] = useState<unknown>(null);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -185,8 +185,8 @@ export default function Events() {
 			</div>
 
 			<LoginModal 
-				open={showLoginModal} 
-				onOpenChange={setShowLoginModal}
+				isOpen={showLoginModal} 
+				onClose={() => setShowLoginModal(false)}
 				onSuccess={() => {
 					setShowLoginModal(false);
 					checkAuth();

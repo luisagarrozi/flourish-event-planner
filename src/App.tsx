@@ -12,6 +12,7 @@ import NotFound from "@/pages/NotFound";
 import { t } from "@/lib/translations";
 
 function App() {
+	console.log("🔍 App: Component rendering");
 	return (
 		<TooltipProvider>
 			<Router>
