@@ -1,172 +1,198 @@
 import { useEffect, useState } from "react";
-import { PageHeader } from "@/components/page-header";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
+import { listEvents, createEvent } from "@/services/events";
+import type { Tables } from "@/integrations/supabase/types";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useNavigate } from "react-router-dom";
-import { listEvents, createEvent } from "@/services/events";
-import { getCurrentUser } from "@/services/auth";
 import { LoginModal } from "@/components/login-modal";
-import type { Tables } from "@/integrations/supabase/types";
-import { Plus, Calendar, MapPin, Heart } from "lucide-react";
 import { t } from "@/lib/translations";
+import { Plus, Calendar, MapPin, Eye } from "lucide-react";
 
 export default function Events() {
-	const navigate = useNavigate();
 	const [events, setEvents] = useState<Tables<'weddings'>[]>([]);
-	const [isCreating, setIsCreating] = useState(false);
-	const [showLogin, setShowLogin] = useState(false);
+	const [isAdding, setIsAdding] = useState(false);
+	const [form, setForm] = useState({ bride_name: "", groom_name: "", wedding_date: "", venue: "" });
+	const [loading, setLoading] = useState(false);
+	const [showLoginModal, setShowLoginModal] = useState(false);
 	const [user, setUser] = useState<any>(null);
-	const [form, setForm] = useState({
-		bride_name: "",
-		groom_name: "",
-		wedding_date: "",
-		venue: "",
-		budget: "",
-	});
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		checkAuth();
+		refresh();
 	}, []);
 
-	useEffect(() => {
-		if (user) {
-			listEvents().then(setEvents);
-		}
-	}, [user]);
-
 	const checkAuth = async () => {
+		const { getCurrentUser } = await import("@/services/auth");
 		const currentUser = await getCurrentUser();
 		setUser(currentUser);
 	};
 
+	const refresh = async () => {
+		const data = await listEvents();
+		setEvents(data);
+	};
+
 	const onCreate = async () => {
 		if (!user) {
-			setShowLogin(true);
+			setShowLoginModal(true);
 			return;
 		}
+
+		if (!form.bride_name.trim() && !form.groom_name.trim()) return;
+
+		setLoading(true);
+		
 		const created = await createEvent({
-			bride_name: form.bride_name || null,
-			groom_name: form.groom_name || null,
+			bride_name: form.bride_name.trim() || null,
+			groom_name: form.groom_name.trim() || null,
 			wedding_date: form.wedding_date || null,
-			venue: form.venue || null,
-			budget: form.budget ? Number(form.budget) : null,
+			venue: form.venue.trim() || null,
 		});
+
+		setLoading(false);
 		if (created) {
-			setIsCreating(false);
-			setForm({ bride_name: "", groom_name: "", wedding_date: "", venue: "", budget: "" });
-			const updated = await listEvents();
-			setEvents(updated);
+			setIsAdding(false);
+			setForm({ bride_name: "", groom_name: "", wedding_date: "", venue: "" });
+			refresh();
 		}
 	};
 
-	const handleAuthSuccess = () => {
-		checkAuth();
+	const formatDate = (date: string | null) => {
+		if (!date) return t("notSpecified");
+		return new Date(date).toLocaleDateString('pt-BR');
 	};
 
 	return (
-		<div className="min-h-screen bg-gradient-warm">
-			<PageHeader title={t("myEvents")} subtitle={t("events")}>
-				<Button className="gradient-primary text-white hover:shadow-elegant" onClick={() => setIsCreating((v) => !v)}>
-					<Plus className="h-4 w-4 mr-2" />
-					{t("newEvent")}
+		<div className="p-6 space-y-6">
+			<div className="flex items-center justify-between">
+				<div>
+					<h1 className="text-3xl font-bold text-charcoal">{t("events")}</h1>
+					<p className="text-charcoal-soft mt-1">{t("manageYourWeddings")}</p>
+				</div>
+				<Button onClick={() => setIsAdding(true)} className="bg-brand text-white hover:bg-brand/90 shadow-elegant">
+					<Plus className="h-4 w-4 mr-2" /> {t("addEvent")}
 				</Button>
-			</PageHeader>
+			</div>
 
-			<LoginModal 
-				isOpen={showLogin} 
-				onClose={() => setShowLogin(false)} 
-				onSuccess={handleAuthSuccess}
-			/>
+			{!user && (
+				<Card className="bg-beige/50 border-charcoal-soft/20">
+					<CardContent className="p-6 text-center">
+						<p className="text-charcoal text-lg">{t("loginToSeeEvents")}</p>
+						<Button onClick={() => setShowLoginModal(true)} className="mt-4 bg-brand text-white hover:bg-brand/90">
+							{t("login")}
+						</Button>
+					</CardContent>
+				</Card>
+			)}
 
-			<main className="p-6 space-y-6 animate-fade-in">
-				{isCreating && (
-					<Card className="shadow-card border-0">
-						<CardHeader>
-							<CardTitle>{t("createEvent")}</CardTitle>
+			{user && events.length === 0 && !isAdding && (
+				<Card className="bg-beige/50 border-charcoal-soft/20">
+					<CardContent className="p-6 text-center">
+						<p className="text-charcoal text-lg">{t("noEventsYet")}</p>
+						<p className="text-charcoal-soft mt-2">{t("createYourFirstEvent")}</p>
+					</CardContent>
+				</Card>
+			)}
+
+			{isAdding && (
+				<Card className="shadow-elegant border-charcoal-soft/20">
+					<CardHeader>
+						<CardTitle className="text-charcoal">{t("addNewEvent")}</CardTitle>
+						<CardDescription className="text-charcoal-soft">{t("fillEventDetails")}</CardDescription>
+					</CardHeader>
+					<CardContent className="space-y-4">
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+							<div className="space-y-2">
+								<Label className="text-charcoal">{t("brideName")}</Label>
+								<Input 
+									value={form.bride_name} 
+									onChange={(e) => setForm({ ...form, bride_name: e.target.value })}
+									className="border-charcoal-soft/20 focus:border-brand text-charcoal"
+								/>
+							</div>
+							<div className="space-y-2">
+								<Label className="text-charcoal">{t("groomName")}</Label>
+								<Input 
+									value={form.groom_name} 
+									onChange={(e) => setForm({ ...form, groom_name: e.target.value })}
+									className="border-charcoal-soft/20 focus:border-brand text-charcoal"
+								/>
+							</div>
+							<div className="space-y-2">
+								<Label className="text-charcoal">{t("weddingDate")}</Label>
+								<Input 
+									type="date" 
+									value={form.wedding_date} 
+									onChange={(e) => setForm({ ...form, wedding_date: e.target.value })}
+									className="border-charcoal-soft/20 focus:border-brand text-charcoal"
+								/>
+							</div>
+							<div className="space-y-2">
+								<Label className="text-charcoal">{t("venue")}</Label>
+								<Input 
+									value={form.venue} 
+									onChange={(e) => setForm({ ...form, venue: e.target.value })}
+									className="border-charcoal-soft/20 focus:border-brand text-charcoal"
+								/>
+							</div>
+						</div>
+						<div className="flex justify-end gap-2">
+							<Button variant="outline" onClick={() => setIsAdding(false)} className="border-charcoal-soft/20 text-charcoal hover:bg-beige">
+								{t("cancel")}
+							</Button>
+							<Button onClick={onCreate} disabled={loading} className="bg-brand text-white hover:bg-brand/90 shadow-elegant">
+								{loading ? t("creating") : t("createEvent")}
+							</Button>
+						</div>
+					</CardContent>
+				</Card>
+			)}
+
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+				{events.map((event) => (
+					<Card key={event.id} className="shadow-card border-charcoal-soft/20 hover:shadow-elegant transition-all duration-300 cursor-pointer" onClick={() => navigate(`/events/${event.id}`)}>
+						<CardHeader className="pb-3">
+							<CardTitle className="text-charcoal text-lg">
+								{event.bride_name && event.groom_name 
+									? `${event.bride_name} & ${event.groom_name}`
+									: event.bride_name || event.groom_name || t("unnamedEvent")
+								}
+							</CardTitle>
+							<CardDescription className="text-charcoal-soft">
+								{event.venue || t("venueNotSpecified")}
+							</CardDescription>
 						</CardHeader>
-						<CardContent className="space-y-4">
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								<div className="space-y-2">
-									<Label>{t("brideName")}</Label>
-									<Input value={form.bride_name} onChange={(e) => setForm({ ...form, bride_name: e.target.value })} />
-								</div>
-								<div className="space-y-2">
-									<Label>{t("groomName")}</Label>
-									<Input value={form.groom_name} onChange={(e) => setForm({ ...form, groom_name: e.target.value })} />
-								</div>
+						<CardContent className="space-y-3">
+							<div className="flex items-center gap-2 text-charcoal-soft">
+								<Calendar className="h-4 w-4" />
+								<span className="text-sm">{formatDate(event.wedding_date)}</span>
 							</div>
-							<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-								<div className="space-y-2">
-									<Label>{t("date")}</Label>
-									<Input type="date" value={form.wedding_date} onChange={(e) => setForm({ ...form, wedding_date: e.target.value })} />
-								</div>
-								<div className="space-y-2">
-									<Label>{t("location")}</Label>
-									<Input value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} />
-								</div>
-								<div className="space-y-2">
-									<Label>{t("budgetLabel")}</Label>
-									<Input 
-										type="text" 
-										value={form.budget} 
-										onChange={(e) => {
-											// Remove all non-numeric characters except decimal point
-											const value = e.target.value.replace(/[^\d.,]/g, '');
-											// Replace comma with dot for decimal
-											const normalizedValue = value.replace(',', '.');
-											setForm({ ...form, budget: normalizedValue });
-										}}
-										placeholder="0,00"
-									/>
-								</div>
+							<div className="flex items-center gap-2 text-charcoal-soft">
+								<MapPin className="h-4 w-4" />
+								<span className="text-sm">{event.venue || t("venueNotSpecified")}</span>
 							</div>
-							<div className="flex gap-2 justify-end">
-								<Button variant="outline" onClick={() => setIsCreating(false)}>{t("cancel")}</Button>
-								<Button onClick={onCreate} className="gradient-primary text-white">{t("save")}</Button>
+							<div className="pt-2 border-t border-charcoal-soft/10">
+								<Button variant="ghost" size="sm" className="w-full text-charcoal hover:bg-brand/10 hover:text-brand">
+									<Eye className="h-4 w-4 mr-2" /> {t("viewDetails")}
+								</Button>
 							</div>
 						</CardContent>
 					</Card>
-				)}
+				))}
+			</div>
 
-				{!user ? (
-					<div className="text-center py-12">
-						<p className="text-muted-foreground mb-4">{t("loginToSeeEvents")}</p>
-						<Button onClick={() => setShowLogin(true)} className="gradient-primary text-white">
-							{t("login")}
-						</Button>
-					</div>
-				) : events.length === 0 ? (
-					<p className="text-muted-foreground">{t("noEventsYet")}</p>
-				) : (
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-						{events.map((evt) => (
-							<Card key={evt.id} className="shadow-card border-0 hover:shadow-elegant transition-all duration-300">
-								<CardContent className="p-6 space-y-3">
-									<div className="flex items-center gap-2">
-										<Heart className="h-4 w-4 text-primary" />
-										<h3 className="text-lg font-semibold text-foreground">{evt.bride_name ?? ""} {evt.groom_name ? `& ${evt.groom_name}` : ""}</h3>
-									</div>
-									<div className="text-sm text-muted-foreground flex items-center gap-2">
-										<Calendar className="h-4 w-4" />
-										<span>{evt.wedding_date ? new Date(evt.wedding_date).toLocaleDateString('pt-BR') : '-'}</span>
-									</div>
-									<div className="text-sm text-muted-foreground flex items-center gap-2">
-										<MapPin className="h-4 w-4" />
-										<span>{evt.venue ?? '-'}</span>
-									</div>
-									<div className="pt-2">
-										<Button size="sm" className="gradient-primary text-white" onClick={() => navigate(`/events/${evt.id}`)}>
-											{t("viewDetails")}
-										</Button>
-									</div>
-								</CardContent>
-							</Card>
-						))}
-					</div>
-				)}
-			</main>
+			<LoginModal 
+				open={showLoginModal} 
+				onOpenChange={setShowLoginModal}
+				onSuccess={() => {
+					setShowLoginModal(false);
+					checkAuth();
+					refresh();
+				}}
+			/>
 		</div>
 	);
 }

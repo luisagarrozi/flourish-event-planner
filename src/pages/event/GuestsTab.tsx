@@ -55,10 +55,15 @@ export default function GuestsTab({ weddingId }: Props) {
 			<Card className="shadow-card border-0">
 				<CardHeader className="pb-3">
 					<div className="flex items-center justify-between gap-2">
-						<CardTitle>{t("guestList")}</CardTitle>
+						<CardTitle className="text-charcoal">{t("guestList")}</CardTitle>
 						<div className="flex items-center gap-2">
-							<Input placeholder={t("search")} value={query} onChange={(e) => setQuery(e.target.value)} className="w-64" />
-							<Button onClick={() => setIsAdding((v) => !v)} className="gradient-primary text-white">
+							<Input 
+								placeholder={t("search")} 
+								value={query} 
+								onChange={(e) => setQuery(e.target.value)} 
+								className="w-64 border-charcoal-soft/20 focus:border-brand text-charcoal" 
+							/>
+							<Button onClick={() => setIsAdding((v) => !v)} className="bg-brand text-white hover:bg-brand/90">
 								<Plus className="h-4 w-4 mr-2" /> {t("addGuest")}
 							</Button>
 						</div>
@@ -67,32 +72,66 @@ export default function GuestsTab({ weddingId }: Props) {
 				<CardContent className="space-y-4">
 					{isAdding && (
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-							<div className="space-y-1"><Label>{t('firstName')}</Label><Input value={form.first_name} onChange={(e)=>setForm({...form, first_name: e.target.value})} /></div>
-							<div className="space-y-1"><Label>{t('lastName')}</Label><Input value={form.last_name} onChange={(e)=>setForm({...form, last_name: e.target.value})} /></div>
-							<div className="space-y-1"><Label>Email</Label><Input value={form.email} onChange={(e)=>setForm({...form, email: e.target.value})} /></div>
+							<div className="space-y-1">
+								<Label className="text-charcoal">{t('firstName')}</Label>
+								<Input 
+									value={form.first_name} 
+									onChange={(e)=>setForm({...form, first_name: e.target.value})} 
+									className="border-charcoal-soft/20 focus:border-brand text-charcoal"
+								/>
+							</div>
+							<div className="space-y-1">
+								<Label className="text-charcoal">{t('lastName')}</Label>
+								<Input 
+									value={form.last_name} 
+									onChange={(e)=>setForm({...form, last_name: e.target.value})} 
+									className="border-charcoal-soft/20 focus:border-brand text-charcoal"
+								/>
+							</div>
+							<div className="space-y-1">
+								<Label className="text-charcoal">Email</Label>
+								<Input 
+									value={form.email} 
+									onChange={(e)=>setForm({...form, email: e.target.value})} 
+									className="border-charcoal-soft/20 focus:border-brand text-charcoal"
+								/>
+							</div>
 							<div className="md:col-span-3 flex justify-end gap-2">
-								<Button variant="outline" onClick={()=>setIsAdding(false)}>{t('cancel')}</Button>
-								<Button onClick={onAdd} className="gradient-primary text-white">{t('addGuest')}</Button>
+								<Button variant="outline" onClick={()=>setIsAdding(false)} className="border-charcoal-soft/20 text-charcoal hover:bg-beige">
+									{t('cancel')}
+								</Button>
+								<Button onClick={onAdd} className="bg-brand text-white hover:bg-brand/90">
+									{t('addGuest')}
+								</Button>
 							</div>
 						</div>
 					)}
 
 					<Table>
 						<TableHeader>
-							<TableRow>
-								<TableHead>{t('name')}</TableHead>
-								<TableHead>Email</TableHead>
-								<TableHead>{t('status')}</TableHead>
-								<TableHead className="w-[80px]"></TableHead>
+							<TableRow className="border-charcoal-soft/20">
+								<TableHead className="text-charcoal">{t('name')}</TableHead>
+								<TableHead className="text-charcoal">Email</TableHead>
+								<TableHead className="text-charcoal">{t('status')}</TableHead>
+								<TableHead className="w-[80px] text-charcoal"></TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
 							{filtered.map((g)=> (
-								<TableRow key={g.id}>
-									<TableCell>{g.first_name} {g.last_name}</TableCell>
-									<TableCell>{g.email ?? '-'}</TableCell>
+								<TableRow key={g.id} className="border-charcoal-soft/10">
+									<TableCell className="text-charcoal">{g.first_name} {g.last_name}</TableCell>
+									<TableCell className="text-charcoal-soft">{g.email ?? '-'}</TableCell>
 									<TableCell>{rsvpBadge(g.rsvp_status)}</TableCell>
-									<TableCell className="text-right"><Button variant="ghost" size="icon" onClick={()=>deleteGuest(g.id).then(refresh)}><Trash2 className="w-4 h-4"/></Button></TableCell>
+									<TableCell className="text-right">
+										<Button 
+											variant="ghost" 
+											size="icon" 
+											onClick={()=>deleteGuest(g.id).then(refresh)}
+											className="text-charcoal-soft hover:text-red-500 hover:bg-red-50"
+										>
+											<Trash2 className="w-4 h-4"/>
+										</Button>
+									</TableCell>
 								</TableRow>
 							))}
 						</TableBody>

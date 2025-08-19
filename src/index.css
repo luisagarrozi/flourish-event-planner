@@ -8,129 +8,157 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Neutral Sophisticated Color Palette */
+    --background: 60 9% 98%; /* Cream white */
+    --foreground: 220 13% 18%; /* Deep charcoal */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%; /* Pure white */
+    --card-foreground: 220 13% 18%; /* Deep charcoal */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%; /* Pure white */
+    --popover-foreground: 220 13% 18%; /* Deep charcoal */
 
-    --primary: 347 85% 57%;
-    --primary-foreground: 0 0% 100%;
-    --primary-soft: 347 100% 96%;
+    /* Brand color (logo gold-beige) */
+    --brand: 44 27% 60%; /* Elegant gold-beige */
+    --brand-foreground: 220 13% 18%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Primary - Sophisticated charcoal */
+    --primary: 220 13% 18%; /* Deep charcoal */
+    --primary-foreground: 0 0% 100%; /* Pure white */
+    --primary-soft: 220 9% 46%; /* Medium gray */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Secondary - Warm beige */
+    --secondary: 45 20% 95%; /* Warm beige */
+    --secondary-foreground: 220 13% 18%; /* Deep charcoal */
 
-    --accent: 347 100% 96%;
-    --accent-foreground: 347 85% 57%;
+    /* Muted - Soft gray */
+    --muted: 220 9% 96%; /* Light gray */
+    --muted-foreground: 220 9% 46%; /* Medium gray */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Accent - use brand */
+    --accent: var(--brand);
+    --accent-foreground: var(--brand-foreground);
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 347 85% 57%;
+    /* Destructive - Muted red */
+    --destructive: 0 40% 60%; /* Muted red */
+    --destructive-foreground: 0 0% 100%; /* Pure white */
+
+    /* Borders and inputs */
+    --border: 220 9% 90%; /* Light gray border */
+    --input: 220 9% 96%; /* Light gray input */
+    --ring: 220 13% 18%; /* Deep charcoal ring */
 
     --radius: 0.75rem;
 
-    /* Wedding theme colors */
-    --rose: 347 85% 57%;
-    --rose-soft: 347 100% 96%;
-    --rose-muted: 347 60% 85%;
-    --blush: 345 90% 92%;
-    --warm-gray: 220 8% 46%;
+    /* Sophisticated neutral theme colors */
+    --charcoal: 220 13% 18%; /* Deep charcoal */
+    --charcoal-soft: 220 9% 46%; /* Medium gray */
+    --charcoal-muted: 220 9% 60%; /* Lighter gray */
+    --cream: 60 9% 98%; /* Cream white */
+    --beige: 45 20% 95%; /* Warm beige */
+    --taupe: 30 15% 90%; /* Warm taupe */
+    --stone: 220 9% 96%; /* Stone gray */
     
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(347 85% 57%), hsl(345 90% 70%));
-    --gradient-soft: linear-gradient(135deg, hsl(347 100% 96%), hsl(345 90% 92%));
-    --gradient-warm: linear-gradient(180deg, hsl(0 0% 100%), hsl(347 100% 98%));
+    /* Elegant gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 13% 18%), hsl(220 9% 46%));
+    --gradient-soft: linear-gradient(135deg, hsl(60 9% 98%), hsl(45 20% 95%));
+    --gradient-warm: linear-gradient(180deg, hsl(0 0% 100%), hsl(60 9% 98%));
+    --gradient-neutral: linear-gradient(135deg, hsl(220 9% 96%), hsl(30 15% 90%));
+    --gradient-brand: linear-gradient(135deg, hsl(var(--brand)), hsl(30 15% 90%));
     
-    /* Shadows */
-    --shadow-elegant: 0 10px 30px -10px hsl(347 85% 57% / 0.15);
-    --shadow-soft: 0 4px 20px -4px hsl(347 85% 57% / 0.08);
-    --shadow-card: 0 2px 8px hsl(220 20% 80% / 0.12);
+    /* Refined shadows */
+    --shadow-elegant: 0 10px 30px -10px hsl(220 13% 18% / 0.12);
+    --shadow-soft: 0 4px 20px -4px hsl(220 13% 18% / 0.08);
+    --shadow-card: 0 2px 8px hsl(220 9% 46% / 0.06);
+    --shadow-subtle: 0 1px 3px hsl(220 13% 18% / 0.04);
     
-    /* Animations */
+    /* Smooth animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Sidebar - Sophisticated neutral */
+    --sidebar-background: 220 9% 96%; /* Light stone gray */
+    --sidebar-foreground: 220 13% 18%; /* Deep charcoal */
+    --sidebar-primary: 220 13% 18%; /* Deep charcoal */
+    --sidebar-primary-foreground: 0 0% 100%; /* Pure white */
+    --sidebar-accent: 45 20% 95%; /* Warm beige */
+    --sidebar-accent-foreground: 220 13% 18%; /* Deep charcoal */
+    --sidebar-border: 220 9% 90%; /* Light gray border */
+    --sidebar-ring: 220 13% 18%; /* Deep charcoal ring */
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Dark theme - Deep sophisticated neutrals */
+    --background: 220 13% 8%; /* Very dark charcoal */
+    --foreground: 60 9% 98%; /* Cream white */
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 13% 12%; /* Dark charcoal */
+    --card-foreground: 60 9% 98%; /* Cream white */
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 13% 12%; /* Dark charcoal */
+    --popover-foreground: 60 9% 98%; /* Cream white */
 
-    --primary: 347 85% 57%;
-    --primary-foreground: 0 0% 100%;
-    --primary-soft: 347 60% 15%;
+    /* Brand color dark */
+    --brand: 44 27% 60%;
+    --brand-foreground: 220 13% 18%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    /* Primary - Light sophisticated */
+    --primary: 60 9% 98%; /* Cream white */
+    --primary-foreground: 220 13% 18%; /* Deep charcoal */
+    --primary-soft: 220 9% 46%; /* Medium gray */
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    /* Secondary - Dark beige */
+    --secondary: 45 20% 15%; /* Dark beige */
+    --secondary-foreground: 60 9% 98%; /* Cream white */
 
-    --accent: 347 60% 15%;
-    --accent-foreground: 347 85% 57%;
+    /* Muted - Dark gray */
+    --muted: 220 9% 20%; /* Dark gray */
+    --muted-foreground: 220 9% 60%; /* Medium gray */
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    /* Accent - brand */
+    --accent: var(--brand);
+    --accent-foreground: var(--brand-foreground);
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 347 85% 57%;
+    /* Destructive - Dark red */
+    --destructive: 0 40% 40%; /* Dark red */
+    --destructive-foreground: 60 9% 98%; /* Cream white */
 
-    /* Dark theme wedding colors */
-    --rose: 347 85% 57%;
-    --rose-soft: 347 60% 15%;
-    --rose-muted: 347 40% 25%;
-    --blush: 345 20% 20%;
-    --warm-gray: 220 15% 65%;
+    /* Borders and inputs */
+    --border: 220 9% 25%; /* Dark gray border */
+    --input: 220 9% 20%; /* Dark gray input */
+    --ring: 60 9% 98%; /* Cream white ring */
+
+    /* Dark theme sophisticated colors */
+    --charcoal: 60 9% 98%; /* Cream white */
+    --charcoal-soft: 220 9% 60%; /* Medium gray */
+    --charcoal-muted: 220 9% 46%; /* Lighter gray */
+    --cream: 220 13% 8%; /* Very dark charcoal */
+    --beige: 45 20% 15%; /* Dark beige */
+    --taupe: 30 15% 20%; /* Dark taupe */
+    --stone: 220 9% 20%; /* Dark stone gray */
     
     /* Dark gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(347 85% 57%), hsl(345 90% 65%));
-    --gradient-soft: linear-gradient(135deg, hsl(347 60% 15%), hsl(345 40% 18%));
-    --gradient-warm: linear-gradient(180deg, hsl(222.2 84% 4.9%), hsl(347 60% 8%));
+    --gradient-primary: linear-gradient(135deg, hsl(60 9% 98%), hsl(220 9% 60%));
+    --gradient-soft: linear-gradient(135deg, hsl(220 13% 12%), hsl(45 20% 15%));
+    --gradient-warm: linear-gradient(180deg, hsl(220 13% 8%), hsl(220 13% 12%));
+    --gradient-neutral: linear-gradient(135deg, hsl(220 9% 20%), hsl(30 15% 20%));
+    --gradient-brand: linear-gradient(135deg, hsl(var(--brand)), hsl(30 15% 20%));
     
     /* Dark shadows */
-    --shadow-elegant: 0 10px 30px -10px hsl(347 85% 57% / 0.25);
-    --shadow-soft: 0 4px 20px -4px hsl(347 85% 57% / 0.15);
-    --shadow-card: 0 2px 8px hsl(220 40% 10% / 0.25);
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --shadow-elegant: 0 10px 30px -10px hsl(220 13% 8% / 0.3);
+    --shadow-soft: 0 4px 20px -4px hsl(220 13% 8% / 0.2);
+    --shadow-card: 0 2px 8px hsl(220 13% 8% / 0.15);
+    --shadow-subtle: 0 1px 3px hsl(220 13% 8% / 0.1);
+    
+    /* Dark sidebar */
+    --sidebar-background: 220 13% 12%; /* Dark charcoal */
+    --sidebar-foreground: 60 9% 98%; /* Cream white */
+    --sidebar-primary: 60 9% 98%; /* Cream white */
+    --sidebar-primary-foreground: 220 13% 18%; /* Deep charcoal */
+    --sidebar-accent: 45 20% 15%; /* Dark beige */
+    --sidebar-accent-foreground: 60 9% 98%; /* Cream white */
+    --sidebar-border: 220 9% 25%; /* Dark gray border */
+    --sidebar-ring: 60 9% 98%; /* Cream white ring */
   }
 }
 
@@ -163,6 +191,14 @@ All colors MUST be HSL.
     background: var(--gradient-warm);
   }
   
+  .gradient-neutral {
+    background: var(--gradient-neutral);
+  }
+
+  .gradient-brand {
+    background: var(--gradient-brand);
+  }
+  
   .shadow-elegant {
     box-shadow: var(--shadow-elegant);
   }
@@ -175,11 +211,92 @@ All colors MUST be HSL.
     box-shadow: var(--shadow-card);
   }
   
+  .shadow-subtle {
+    box-shadow: var(--shadow-subtle);
+  }
+  
   .transition-smooth {
     transition: var(--transition-smooth);
   }
   
   .transition-bounce {
     transition: var(--transition-bounce);
+  }
+  
+  /* Neutral color utilities */
+  .bg-charcoal {
+    background-color: hsl(var(--charcoal));
+  }
+  
+  .bg-charcoal-soft {
+    background-color: hsl(var(--charcoal-soft));
+  }
+  
+  .bg-cream {
+    background-color: hsl(var(--cream));
+  }
+  
+  .bg-beige {
+    background-color: hsl(var(--beige));
+  }
+  
+  .bg-taupe {
+    background-color: hsl(var(--taupe));
+  }
+  
+  .bg-stone {
+    background-color: hsl(var(--stone));
+  }
+
+  .bg-brand { background-color: hsl(var(--brand)); }
+  .text-brand { color: hsl(var(--brand)); }
+  .border-brand { border-color: hsl(var(--brand)); }
+  
+  .text-charcoal {
+    color: hsl(var(--charcoal));
+  }
+  
+  .text-charcoal-soft {
+    color: hsl(var(--charcoal-soft));
+  }
+  
+  .text-cream {
+    color: hsl(var(--cream));
+  }
+  
+  .text-beige {
+    color: hsl(var(--beige));
+  }
+  
+  .text-taupe {
+    color: hsl(var(--taupe));
+  }
+  
+  .text-stone {
+    color: hsl(var(--stone));
+  }
+  
+  .border-charcoal {
+    border-color: hsl(var(--charcoal));
+  }
+  
+  .border-charcoal-soft {
+    border-color: hsl(var(--charcoal-soft));
+  }
+  
+  .border-cream {
+    border-color: hsl(var(--cream));
+  }
+  
+  .border-beige {
+    border-color: hsl(var(--beige));
+  }
+  
+  .border-taupe {
+    border-color: hsl(var(--taupe));
+  }
+  
+  .border-stone {
+    border-color: hsl(var(--stone));
   }
 }

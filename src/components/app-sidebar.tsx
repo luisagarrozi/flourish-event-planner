@@ -1,131 +1,65 @@
-import { useState } from "react"
-import { 
-  LayoutDashboard, 
-  CheckSquare, 
-  Users, 
-  Calendar, 
-  Heart,
-  Settings,
-  LogOut
-} from "lucide-react"
-import { NavLink, useLocation } from "react-router-dom"
-import { t } from "@/lib/translations"
+import { Link, useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Calendar, CheckSquare, Users, Home } from "lucide-react";
+import { t } from "@/lib/translations";
+import BrandLogo from "@/components/BrandLogo";
 
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarTrigger,
-  useSidebar,
-  SidebarFooter,
-} from "@/components/ui/sidebar"
+interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-const items = [
-  { title: t("events"), url: "/", icon: LayoutDashboard },
-  { title: t("tasks"), url: "/tasks", icon: CheckSquare },
-  { title: t("guestList"), url: "/guests", icon: Users },
-  { title: t("timeline"), url: "/timeline", icon: Calendar },
-  { title: t("vendors"), url: "/vendors", icon: Heart },
-]
+export function AppSidebar({ className }: SidebarProps) {
+	const location = useLocation();
 
-export function AppSidebar() {
-  const { state } = useSidebar()
-  const location = useLocation()
-  const currentPath = location.pathname
-  const collapsed = state === "collapsed"
+	const navigation = [
+		{
+			title: t("events"),
+			label: "events",
+			icon: Home,
+			variant: "ghost" as const,
+			href: "/",
+		},
+		{
+			title: t("tasks"),
+			label: "tasks",
+			icon: CheckSquare,
+			variant: "ghost" as const,
+			href: "/tasks",
+		},
+		{
+			title: t("guests"),
+			label: "guests",
+			icon: Users,
+			variant: "ghost" as const,
+			href: "/guests",
+		},
+	];
 
-  const isActive = (path: string) => currentPath === path
-
-  return (
-    <Sidebar
-      className={`${collapsed ? "w-14" : "w-60"} transition-all duration-300`}
-      collapsible="icon"
-    >
-      <SidebarContent className="gradient-warm">
-        {/* Logo Section */}
-        <div className="p-6 border-b border-border/50">
-          {!collapsed ? (
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
-                <Heart className="h-4 w-4 text-white" />
-              </div>
-              <div>
-                <h2 className="font-serif text-lg font-semibold text-foreground">
-                  {t("weddingPlanner")}
-                </h2>
-                <p className="text-xs text-muted-foreground">{t("pro")}</p>
-              </div>
-            </div>
-          ) : (
-            <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center mx-auto">
-              <Heart className="h-4 w-4 text-white" />
-            </div>
-          )}
-        </div>
-
-        <SidebarGroup
-          className="px-3 py-4"
-        >
-          <SidebarGroupLabel className={`${collapsed ? "sr-only" : ""} text-warm-gray font-medium text-xs uppercase tracking-wider mb-2`}>
-            {t("mainNavigation")}
-          </SidebarGroupLabel>
-
-          <SidebarGroupContent>
-            <SidebarMenu className="space-y-1">
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild className="group">
-                    <NavLink 
-                      to={item.url} 
-                      end
-                      className={({ isActive }) =>
-                        `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${
-                          isActive
-                            ? "bg-primary text-primary-foreground shadow-soft"
-                            : "text-warm-gray hover:bg-accent hover:text-accent-foreground"
-                        }`
-                      }
-                    >
-                      <item.icon className="h-4 w-4 shrink-0" />
-                      {!collapsed && (
-                        <span className="font-medium text-sm transition-opacity">
-                          {item.title}
-                        </span>
-                      )}
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarFooter className="p-3 border-t border-border/50 mt-auto">
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <button className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-warm-gray hover:bg-accent hover:text-accent-foreground transition-all duration-200 w-full text-left">
-                  <Settings className="h-4 w-4 shrink-0" />
-                  {!collapsed && <span className="font-medium text-sm">{t("settings")}</span>}
-                </button>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <button className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-warm-gray hover:bg-destructive hover:text-destructive-foreground transition-all duration-200 w-full text-left">
-                  <LogOut className="h-4 w-4 shrink-0" />
-                  {!collapsed && <span className="font-medium text-sm">{t("logout")}</span>}
-                </button>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarFooter>
-      </SidebarContent>
-    </Sidebar>
-  )
+	return (
+		<div className={cn("pb-12 border-r bg-stone", className)}>
+			<div className="space-y-4 py-4">
+				<div className="px-4 pb-2 flex items-center">
+					<BrandLogo size={34} />
+				</div>
+				<div className="px-3 py-2">
+					<div className="space-y-1">
+						{navigation.map((item) => (
+							<Link key={item.href} to={item.href}>
+								<Button
+									variant={location.pathname === item.href ? "secondary" : "ghost"}
+									className={cn(
+										"w-full justify-start text-charcoal hover:text-charcoal hover:bg-beige",
+										location.pathname === item.href && "bg-brand/15 text-charcoal border border-brand/30"
+									)}
+								>
+									<item.icon className="mr-2 h-4 w-4 text-brand" />
+									{item.title}
+								</Button>
+							</Link>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }

@@ -66,10 +66,15 @@ export default function TasksTab({ weddingId }: Props) {
 			<Card className="shadow-card border-0">
 				<CardHeader className="pb-3">
 					<div className="flex items-center justify-between gap-2">
-						<CardTitle>{t("organization")}</CardTitle>
+						<CardTitle className="text-charcoal">{t("organization")}</CardTitle>
 						<div className="flex items-center gap-2">
-							<Input placeholder={t("searchTasksPlaceholder")} value={query} onChange={(e) => setQuery(e.target.value)} className="w-64" />
-							<Button onClick={() => setIsAdding((v) => !v)} className="gradient-primary text-white">
+							<Input 
+								placeholder={t("searchTasksPlaceholder")} 
+								value={query} 
+								onChange={(e) => setQuery(e.target.value)} 
+								className="w-64 border-charcoal-soft/20 focus:border-brand text-charcoal" 
+							/>
+							<Button onClick={() => setIsAdding((v) => !v)} className="bg-brand text-white hover:bg-brand/90">
 								<Plus className="h-4 w-4 mr-2" /> {t("addTask")}
 							</Button>
 						</div>
@@ -79,49 +84,86 @@ export default function TasksTab({ weddingId }: Props) {
 					{isAdding && (
 						<div className="grid grid-cols-1 md:grid-cols-4 gap-3">
 							<div className="space-y-1">
-								<Label>{t("title")}</Label>
-								<Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
+								<Label className="text-charcoal">{t("title")}</Label>
+								<Input 
+									value={form.title} 
+									onChange={(e) => setForm({ ...form, title: e.target.value })}
+									className="border-charcoal-soft/20 focus:border-brand text-charcoal"
+								/>
 							</div>
 							<div className="space-y-1">
-								<Label>{t("date")}</Label>
-								<Input type="date" value={form.due_date} onChange={(e) => setForm({ ...form, due_date: e.target.value })} />
+								<Label className="text-charcoal">{t("date")}</Label>
+								<Input 
+									type="date" 
+									value={form.due_date} 
+									onChange={(e) => setForm({ ...form, due_date: e.target.value })}
+									className="border-charcoal-soft/20 focus:border-brand text-charcoal"
+								/>
 							</div>
 							<div className="space-y-1">
-								<Label>{t("priority")}</Label>
-								<Input value={form.priority} onChange={(e) => setForm({ ...form, priority: e.target.value })} />
+								<Label className="text-charcoal">{t("priority")}</Label>
+								<Input 
+									value={form.priority} 
+									onChange={(e) => setForm({ ...form, priority: e.target.value })}
+									className="border-charcoal-soft/20 focus:border-brand text-charcoal"
+								/>
 							</div>
 							<div className="space-y-1">
-								<Label>{t("category")}</Label>
-								<Input value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} />
+								<Label className="text-charcoal">{t("category")}</Label>
+								<Input 
+									value={form.category} 
+									onChange={(e) => setForm({ ...form, category: e.target.value })}
+									className="border-charcoal-soft/20 focus:border-brand text-charcoal"
+								/>
 							</div>
 							<div className="md:col-span-4 flex justify-end gap-2">
-								<Button variant="outline" onClick={() => setIsAdding(false)}>{t("cancel")}</Button>
-								<Button onClick={onAdd} disabled={loading} className="gradient-primary text-white">{t("addTask")}</Button>
+								<Button variant="outline" onClick={() => setIsAdding(false)} className="border-charcoal-soft/20 text-charcoal hover:bg-beige">
+									{t("cancel")}
+								</Button>
+								<Button onClick={onAdd} disabled={loading} className="bg-brand text-white hover:bg-brand/90">
+									{t("addTask")}
+								</Button>
 							</div>
 						</div>
 					)}
 
 					<Table>
 						<TableHeader>
-							<TableRow>
-								<TableHead className="w-[60px]"></TableHead>
-								<TableHead>{t("title")}</TableHead>
-								<TableHead>{t("date")}</TableHead>
-								<TableHead className="w-[120px]"></TableHead>
+							<TableRow className="border-charcoal-soft/20">
+								<TableHead className="w-[60px] text-charcoal"></TableHead>
+								<TableHead className="text-charcoal">{t("title")}</TableHead>
+								<TableHead className="text-charcoal">{t("date")}</TableHead>
+								<TableHead className="w-[120px] text-charcoal"></TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
 							{filtered.map((task) => (
-								<TableRow key={task.id}>
+								<TableRow key={task.id} className="border-charcoal-soft/10">
 									<TableCell className="text-center">
-										<button onClick={() => toggleCompleted(task)} className={`w-6 h-6 rounded border flex items-center justify-center ${task.completed ? 'bg-primary text-white border-primary' : 'border-muted-foreground'}`}>
-											{task.completed ? <Check className="w-4 h-4" /> : <Clock className="w-4 h-4 text-muted-foreground" />}
+										<button 
+											onClick={() => toggleCompleted(task)} 
+											className={`w-6 h-6 rounded border flex items-center justify-center transition-colors ${
+												task.completed 
+													? 'bg-brand text-white border-brand' 
+													: 'border-charcoal-soft hover:border-brand'
+											}`}
+										>
+											{task.completed ? <Check className="w-4 h-4" /> : <Clock className="w-4 h-4 text-charcoal-soft" />}
 										</button>
 									</TableCell>
-									<TableCell className={task.completed ? 'line-through text-muted-foreground' : ''}>{task.title}</TableCell>
-									<TableCell>{task.due_date ? new Date(task.due_date).toLocaleDateString('pt-BR') : '-'}</TableCell>
+									<TableCell className={task.completed ? 'line-through text-charcoal-soft' : 'text-charcoal'}>
+										{task.title}
+									</TableCell>
+									<TableCell className="text-charcoal-soft">
+										{task.due_date ? new Date(task.due_date).toLocaleDateString('pt-BR') : '-'}
+									</TableCell>
 									<TableCell className="text-right">
-										<Button variant="ghost" size="icon" onClick={() => remove(task)}>
+										<Button 
+											variant="ghost" 
+											size="icon" 
+											onClick={() => remove(task)}
+											className="text-charcoal-soft hover:text-red-500 hover:bg-red-50"
+										>
 											<Trash2 className="w-4 h-4" />
 										</Button>
 									</TableCell>
