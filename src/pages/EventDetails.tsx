@@ -23,9 +23,9 @@ export default function EventDetails() {
 	}, [id]);
 	
 	return (
-		<div className="p-6 space-y-6">
-			<div className="mb-6">
-				<h1 className="text-3xl font-bold text-charcoal">
+		<div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+			<div className="mb-4 sm:mb-6">
+				<h1 className="text-2xl sm:text-3xl font-bold text-charcoal">
 					{event?.bride_name && event?.groom_name ? `${event.bride_name} & ${event.groom_name}` : t('events')}
 				</h1>
 				<p className="text-charcoal-soft mt-1">
@@ -36,23 +36,23 @@ export default function EventDetails() {
 			<Card className="shadow-card border-0">
 				<CardContent className="p-0">
 					<Tabs defaultValue="organization" className="w-full">
-						<div className="flex items-center justify-between p-4 border-b border-charcoal-soft/20">
-							<TabsList className="bg-stone border border-charcoal-soft/20">
+						<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 border-b border-charcoal-soft/20">
+							<TabsList className="bg-stone border border-charcoal-soft/20 w-full sm:w-auto">
 								<TabsTrigger 
 									value="organization" 
-									className="data-[state=active]:bg-brand data-[state=active]:text-white data-[state=active]:shadow-sm"
+									className="data-[state=active]:bg-brand data-[state=active]:text-white data-[state=active]:shadow-sm flex-1 sm:flex-none"
 								>
 									{t('organization')}
 								</TabsTrigger>
 								<TabsTrigger 
 									value="guests" 
-									className="data-[state=active]:bg-brand data-[state=active]:text-white data-[state=active]:shadow-sm"
+									className="data-[state=active]:bg-brand data-[state=active]:text-white data-[state=active]:shadow-sm flex-1 sm:flex-none"
 								>
 									{t('guestList')}
 								</TabsTrigger>
 								<TabsTrigger 
 									value="vendors" 
-									className="data-[state=active]:bg-brand data-[state=active]:text-white data-[state=active]:shadow-sm"
+									className="data-[state=active]:bg-brand data-[state=active]:text-white data-[state=active]:shadow-sm flex-1 sm:flex-none"
 								>
 									{t('vendors')}
 								</TabsTrigger>

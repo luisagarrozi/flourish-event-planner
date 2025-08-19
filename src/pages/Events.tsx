@@ -66,20 +66,20 @@ export default function Events() {
 	};
 
 	return (
-		<div className="p-6 space-y-6">
-			<div className="flex items-center justify-between">
+		<div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+			<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 				<div>
-					<h1 className="text-3xl font-bold text-charcoal">{t("events")}</h1>
+					<h1 className="text-2xl sm:text-3xl font-bold text-charcoal">{t("events")}</h1>
 					<p className="text-charcoal-soft mt-1">{t("manageYourWeddings")}</p>
 				</div>
-				<Button onClick={() => setIsAdding(true)} className="bg-brand text-white hover:bg-brand/90 shadow-elegant">
+				<Button onClick={() => setIsAdding(true)} className="bg-brand text-white hover:bg-brand/90 shadow-elegant w-full sm:w-auto">
 					<Plus className="h-4 w-4 mr-2" /> {t("addEvent")}
 				</Button>
 			</div>
 
 			{!user && (
 				<Card className="bg-beige/50 border-charcoal-soft/20">
-					<CardContent className="p-6 text-center">
+					<CardContent className="p-4 sm:p-6 text-center">
 						<p className="text-charcoal text-lg">{t("loginToSeeEvents")}</p>
 						<Button onClick={() => setShowLoginModal(true)} className="mt-4 bg-brand text-white hover:bg-brand/90">
 							{t("login")}
@@ -90,7 +90,7 @@ export default function Events() {
 
 			{user && events.length === 0 && !isAdding && (
 				<Card className="bg-beige/50 border-charcoal-soft/20">
-					<CardContent className="p-6 text-center">
+					<CardContent className="p-4 sm:p-6 text-center">
 						<p className="text-charcoal text-lg">{t("noEventsYet")}</p>
 						<p className="text-charcoal-soft mt-2">{t("createYourFirstEvent")}</p>
 					</CardContent>
@@ -99,12 +99,12 @@ export default function Events() {
 
 			{isAdding && (
 				<Card className="shadow-elegant border-charcoal-soft/20">
-					<CardHeader>
+					<CardHeader className="p-4 sm:p-6">
 						<CardTitle className="text-charcoal">{t("addNewEvent")}</CardTitle>
 						<CardDescription className="text-charcoal-soft">{t("fillEventDetails")}</CardDescription>
 					</CardHeader>
-					<CardContent className="space-y-4">
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<CardContent className="space-y-4 p-4 sm:p-6">
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 							<div className="space-y-2">
 								<Label className="text-charcoal">{t("brideName")}</Label>
 								<Input 
@@ -139,11 +139,11 @@ export default function Events() {
 								/>
 							</div>
 						</div>
-						<div className="flex justify-end gap-2">
-							<Button variant="outline" onClick={() => setIsAdding(false)} className="border-charcoal-soft/20 text-charcoal hover:bg-beige">
+						<div className="flex flex-col sm:flex-row justify-end gap-2">
+							<Button variant="outline" onClick={() => setIsAdding(false)} className="border-charcoal-soft/20 text-charcoal hover:bg-beige order-2 sm:order-1">
 								{t("cancel")}
 							</Button>
-							<Button onClick={onCreate} disabled={loading} className="bg-brand text-white hover:bg-brand/90 shadow-elegant">
+							<Button onClick={onCreate} disabled={loading} className="bg-brand text-white hover:bg-brand/90 shadow-elegant order-1 sm:order-2">
 								{loading ? t("creating") : t("createEvent")}
 							</Button>
 						</div>
@@ -151,10 +151,10 @@ export default function Events() {
 				</Card>
 			)}
 
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
 				{events.map((event) => (
 					<Card key={event.id} className="shadow-card border-charcoal-soft/20 hover:shadow-elegant transition-all duration-300 cursor-pointer" onClick={() => navigate(`/events/${event.id}`)}>
-						<CardHeader className="pb-3">
+						<CardHeader className="pb-3 p-4 sm:p-6">
 							<CardTitle className="text-charcoal text-lg">
 								{event.bride_name && event.groom_name 
 									? `${event.bride_name} & ${event.groom_name}`
@@ -165,7 +165,7 @@ export default function Events() {
 								{event.venue || t("venueNotSpecified")}
 							</CardDescription>
 						</CardHeader>
-						<CardContent className="space-y-3">
+						<CardContent className="space-y-3 p-4 sm:p-6 pt-0">
 							<div className="flex items-center gap-2 text-charcoal-soft">
 								<Calendar className="h-4 w-4" />
 								<span className="text-sm">{formatDate(event.wedding_date)}</span>

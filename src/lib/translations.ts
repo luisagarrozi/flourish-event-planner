@@ -37,6 +37,7 @@ export const translations = {
   priority: "Prioridade",
   category: "Categoria",
   addTask: "Adicionar tarefa",
+  addNewTask: "Adicionar nova tarefa",
   addGuest: "Adicionar convidado",
   addVendor: "Adicionar fornecedor",
   name: "Nome",
@@ -79,6 +80,74 @@ export const translations = {
   gerenciar: "Gerenciar",
   atribuir: "Atribuir",
   logout: "Sair",
+  
+  // Missing translations found in the codebase
+  manageYourWeddingTasks: "Gerencie suas tarefas de casamento",
+  keepTrackOfYourWeddingPlanningProgress: "Acompanhe o progresso do planejamento do seu casamento",
+  manageYourWeddingGuestListAndRSVPs: "Gerencie sua lista de convidados e confirmações",
+  totalTasks: "Total de Tarefas",
+  allTasks: "Todas as Tarefas",
+  totalGuests: "Total de Convidados",
+  allGuests: "Todos os Convidados",
+  oopsPageNotFound: "Ops! Página não encontrada",
+  returnToHome: "Voltar ao Início",
+  
+  // Task-related translations
+  bookWeddingVenue: "Reservar local do casamento",
+  sendSaveTheDates: "Enviar save the dates",
+  orderWeddingDress: "Encomendar vestido de noiva",
+  bookPhotographer: "Contratar fotógrafo",
+  chooseWeddingCake: "Escolher bolo de casamento",
+  bookDJBand: "Contratar DJ/Banda",
+  high: "Alta",
+  medium: "Média",
+  low: "Baixa",
+  
+  // Priority levels
+  priorityHigh: "Alta",
+  priorityMedium: "Média", 
+  priorityLow: "Baixa",
+  
+  // Form and action translations
+  save: "Salvar",
+  editTask: "Editar Tarefa",
+  creatingTasks: "Criando...",
+  loadingTasks: "Carregando tarefas...",
+  noTasksFound: "Nenhuma tarefa encontrada",
+  noTasksFoundMessage: "Escolha como você quer começar a organizar seu evento:",
+  eventDateRequired: "É necessário definir uma data para o evento para usar as tarefas pré-definidas.",
+  eventDateRequiredWarning: "⚠️ É necessário definir uma data para o evento para usar as tarefas pré-definidas.",
+  
+  // Budget translations
+  budget: "Orçamento",
+  trackYourWeddingExpensesAndStayOnBudget: "Acompanhe as despesas do seu casamento e mantenha-se no orçamento",
+  totalBudget: "Orçamento Total",
+  amountSpent: "Valor Gasto",
+  remaining: "Restante",
+  budgetOverview: "Visão Geral do Orçamento",
+  budgetUsed: "Orçamento Utilizado",
+  budgetBreakdown: "Detalhamento do Orçamento",
+  ofTotalBudget: "do orçamento total",
+  used: "usado",
+  notStarted: "não iniciado",
+  
+  // Category translations
+  catering: "Buffet",
+  photography: "Fotografia",
+  flowers: "Flores",
+  musicDJ: "Música/DJ",
+  attire: "Vestuário",
+  miscellaneous: "Diversos",
+  invitations: "Convites",
+  entertainment: "Entretenimento",
+  
+  // Description and other UI elements
+  description: "Descrição",
+  actions: "Ações",
+  completed: "Concluído",
+  
+  // Error messages
+  unexpectedError: "An unexpected error occurred",
 };
 
 export type TranslationKey = keyof typeof translations;

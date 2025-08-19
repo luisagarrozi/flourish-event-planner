@@ -20,123 +20,123 @@ const PRESET_TASKS = [
 	{
 		monthsBefore: 12,
 		tasks: [
-			"Escolher Espaço Cerimônia",
-			"Escolher Espaço da Recepção e Festa",
-			"Escolher Buffet",
-			"Fazer Site",
-			"Contratar Assessoria e Cerimonial",
-			"Alimentação Staffs"
+			{ title: "Escolher Espaço Cerimônia", category: "Local" },
+			{ title: "Escolher Espaço da Recepção e Festa", category: "Local" },
+			{ title: "Escolher Buffet", category: "Local" },
+			{ title: "Fazer Site", category: "Outros" },
+			{ title: "Contratar Assessoria e Cerimonial", category: "Outros" },
+			{ title: "Alimentação Staffs", category: "Local" }
 		]
 	},
 	{
 		monthsBefore: 11,
 		tasks: [
-			"Contratar Decoração"
+			{ title: "Contratar Decoração", category: "Local" }
 		]
 	},
 	{
 		monthsBefore: 10,
 		tasks: [
-			"Contratar Fotografia",
-			"Contratar Filmagem"
+			{ title: "Contratar Fotografia", category: "Outros" },
+			{ title: "Contratar Filmagem", category: "Outros" }
 		]
 	},
 	{
 		monthsBefore: 9,
 		tasks: [
-			"Contratar Músicos para Cerimônia",
-			"Contratar DJ",
-			"Alugar Vestido",
-			"Maquiagem e Cabelo",
-			"Contratar Pista de Led",
-			"Contratar Telão"
+			{ title: "Contratar Músicos para Cerimônia", category: "Outros" },
+			{ title: "Contratar DJ", category: "Outros" },
+			{ title: "Alugar Vestido", category: "Noiva" },
+			{ title: "Maquiagem e Cabelo", category: "Noiva" },
+			{ title: "Contratar Pista de Led", category: "Local" },
+			{ title: "Contratar Telão", category: "Local" }
 		]
 	},
 	{
 		monthsBefore: 8,
 		tasks: [
-			"Contratar Banda",
-			"Contratar Celebrante"
+			{ title: "Contratar Banda", category: "Outros" },
+			{ title: "Contratar Celebrante", category: "Outros" }
 		]
 	},
 	{
 		monthsBefore: 7,
 		tasks: [
-			"Alugar Acessórios",
-			"Contratar Doces",
-			"Contratar Bolo",
-			"Contratar Bolo Fake",
-			"Contratar Bartender"
+			{ title: "Alugar Acessórios", category: "Noiva" },
+			{ title: "Contratar Doces", category: "Local" },
+			{ title: "Contratar Bolo", category: "Local" },
+			{ title: "Contratar Bolo Fake", category: "Local" },
+			{ title: "Contratar Bartender", category: "Local" }
 		]
 	},
 	{
 		monthsBefore: 6,
 		tasks: [
-			"Contratar Bebidas e Garçons",
-			"Contratar Bem-Casados",
-			"Traje Noivo",
-			"Entrega Convites",
-			"Fazer lista presentes Site"
+			{ title: "Contratar Bebidas e Garçons", category: "Local" },
+			{ title: "Contratar Bem-Casados", category: "Local" },
+			{ title: "Traje Noivo", category: "Noivo" },
+			{ title: "Entrega Convites", category: "Outros" },
+			{ title: "Fazer lista presentes Site", category: "Outros" }
 		]
 	},
 	{
 		monthsBefore: 5,
 		tasks: [
-			"Contratar Iluminação",
-			"Contratar Animação",
-			"Tenda"
+			{ title: "Contratar Iluminação", category: "Local" },
+			{ title: "Contratar Animação", category: "Outros" },
+			{ title: "Tenda", category: "Local" }
 		]
 	},
 	{
 		monthsBefore: 4,
 		tasks: [
-			"Contratar Carro para Noiva",
-			"Comprar Lembrancinhas",
-			"Contratar Gerador de Energia",
-			"Contratar Recreadores"
+			{ title: "Contratar Carro para Noiva", category: "Noiva" },
+			{ title: "Comprar Lembrancinhas", category: "Outros" },
+			{ title: "Contratar Gerador de Energia", category: "Local" },
+			{ title: "Contratar Recreadores", category: "Outros" }
 		]
 	},
 	{
 		monthsBefore: 3,
 		tasks: [
-			"Comprar Chinelos",
-			"Contratar Lanche da Madrugada",
-			"Aluguel de Louças",
-			"Marcar Pré Wedding",
-			"Degustações",
-			"Entrega Convites Convidados",
-			"Reservar Hotel Perto do Local da Cerimônia"
+			{ title: "Comprar Chinelos", category: "Noiva" },
+			{ title: "Contratar Lanche da Madrugada", category: "Local" },
+			{ title: "Aluguel de Louças", category: "Local" },
+			{ title: "Marcar Pré Wedding", category: "Outros" },
+			{ title: "Degustações", category: "Local" },
+			{ title: "Entrega Convites Convidados", category: "Outros" },
+			{ title: "Reservar Hotel Perto do Local da Cerimônia", category: "Outros" }
 		]
 	},
 	{
 		monthsBefore: 2,
 		tasks: [
-			"Contratar Papelaria",
-			"Comprar Porta Aliança",
-			"Comprar Topo de Bolo",
-			"Contratar Coreógrafa",
-			"Escolher Modelo Bouquet"
+			{ title: "Contratar Papelaria", category: "Outros" },
+			{ title: "Comprar Porta Aliança", category: "Outros" },
+			{ title: "Comprar Topo de Bolo", category: "Local" },
+			{ title: "Contratar Coreógrafa", category: "Outros" },
+			{ title: "Escolher Modelo Bouquet", category: "Noiva" }
 		]
 	},
 	{
 		monthsBefore: 1,
 		tasks: [
-			"Comprar Saída Igreja",
-			"Kit Toilet",
-			"Barbeiro",
-			"Comprar ou Polir Alianças",
-			"Fazer Lista e Importar Pro Site",
-			"Contratar Serviços Gerais",
-			"Contratar Segurannças",
-			"Fazer Mapa de Mesa",
-			"Escolher Músicas Principais",
-			"Escolher Ordem de Padrinhos"
+			{ title: "Comprar Saída Igreja", category: "Noiva" },
+			{ title: "Kit Toilet", category: "Noiva" },
+			{ title: "Barbeiro", category: "Noivo" },
+			{ title: "Comprar ou Polir Alianças", category: "Outros" },
+			{ title: "Fazer Lista e Importar Pro Site", category: "Outros" },
+			{ title: "Contratar Serviços Gerais", category: "Outros" },
+			{ title: "Contratar Segurannças", category: "Local" },
+			{ title: "Fazer Mapa de Mesa", category: "Outros" },
+			{ title: "Escolher Músicas Principais", category: "Outros" },
+			{ title: "Escolher Ordem de Padrinhos", category: "Outros" }
 		]
 	},
 	{
 		weeksBefore: 2,
 		tasks: [
-			"Teste de Cabelo e Maquiagem"
+			{ title: "Teste de Cabelo e Maquiagem", category: "Noiva" }
 		]
 	}
 ];
@@ -248,14 +248,13 @@ export default function CalendarioTab({ weddingId, eventDate }: Props) {
 		
 		for (const preset of PRESET_TASKS) {
 			const dueDate = calculateTaskDate(eventDate, preset.monthsBefore, preset.weeksBefore);
-			const category = getRelativeTimeDescription(preset.monthsBefore, preset.weeksBefore);
 			
-			for (const taskTitle of preset.tasks) {
+			for (const task of preset.tasks) {
 				allTasks.push({
-					title: taskTitle,
+					title: task.title,
 					due_date: dueDate,
 					priority: "medium",
-					category: category,
+					category: task.category,
 					completed: false,
 				});
 			}
