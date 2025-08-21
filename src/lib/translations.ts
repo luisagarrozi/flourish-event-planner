@@ -148,6 +148,22 @@ export const translations = {
   
   // Error messages
   unexpectedError: "An unexpected error occurred",
+  
+  // Missing translations
+  guests: "Convidados",
+  daysUntilWedding: "Dias até o casamento",
+  tasksCompleted: "Tarefas concluídas",
+  guestsRSVPd: "Convidados confirmados",
+  weddingPlannerDashboard: "Painel do Planejador de Casamento",
+  welcomeToYourWeddingPlanningCentralHub: "Bem-vindo ao seu centro de planejamento de casamento",
+  welcomeToYourWeddingPlanner: "Bem-vindo ao seu Planejador de Casamento",
+  welcomeDescription: "Organize seu dia especial com nossa plataforma completa de planejamento",
+  weddingInformation: "Informações do Casamento",
+  bridesName: "Nome da Noiva",
+  groomsName: "Nome do Noivo",
+  recentTasks: "Tarefas Recentes",
+  due: "Vencimento",
+  site: "Site",
 };
 
 export type TranslationKey = keyof typeof translations;

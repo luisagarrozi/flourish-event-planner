@@ -10,6 +10,8 @@ import { t } from "@/lib/translations";
 
 interface PageHeaderProps {
 	isMobile?: boolean;
+	title?: string;
+	subtitle?: string;
 }
 
 export function PageHeader({ isMobile = false }: PageHeaderProps) {

@@ -23,14 +23,14 @@ function checkRateLimit(userId: string, limit: number = 100, windowMs: number = 
 }
 
 // Validation helpers
-function validateWeddingAccess(weddingId: string, userId: string): Promise<boolean> {
-  return supabase
+async function validateWeddingAccess(weddingId: string, userId: string): Promise<boolean> {
+  const { data } = await supabase
     .from('weddings')
     .select('id')
     .eq('id', weddingId)
     .eq('user_id', userId)
-    .single()
-    .then(({ data }) => !!data);
+    .single();
+  return !!data;
 }
 
 // API wrapper functions
