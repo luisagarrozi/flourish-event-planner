@@ -1,7 +1,8 @@
 import { supabase } from "@/integrations/supabase/client";
+import type { User } from "@supabase/supabase-js";
 
 // Cache for user data
-let userCache: { user: unknown; timestamp: number } | null = null;
+let userCache: { user: User; timestamp: number } | null = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 export async function signUp(email: string, password: string) {
@@ -29,7 +30,7 @@ export async function signOut() {
 	return { error };
 }
 
-export async function getCurrentUser() {
+export async function getCurrentUser(): Promise<User | null> {
 	console.log("🔍 auth: getCurrentUser called");
 	// Check if we have a valid cached user
 	if (userCache && Date.now() - userCache.timestamp < CACHE_DURATION) {

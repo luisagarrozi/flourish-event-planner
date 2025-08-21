@@ -64,6 +64,93 @@ export type Database = {
           },
         ]
       }
+      gift_lists: {
+        Row: {
+          claimed: boolean | null
+          claimed_by: string | null
+          created_at: string
+          gift_description: string | null
+          gift_name: string
+          gift_price: number | null
+          gift_url: string | null
+          id: string
+          site_id: string
+          updated_at: string
+        }
+        Insert: {
+          claimed?: boolean | null
+          claimed_by?: string | null
+          created_at?: string
+          gift_description?: string | null
+          gift_name: string
+          gift_price?: number | null
+          gift_url?: string | null
+          id?: string
+          site_id: string
+          updated_at?: string
+        }
+        Update: {
+          claimed?: boolean | null
+          claimed_by?: string | null
+          created_at?: string
+          gift_description?: string | null
+          gift_name?: string
+          gift_price?: number | null
+          gift_url?: string | null
+          id?: string
+          site_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      global_vendors: {
+        Row: {
+          address: string | null
+          category: string
+          contact_person: string | null
+          created_at: string | null
+          email: string | null
+          id: string
+          name: string
+          notes: string | null
+          phone: string | null
+          status: string | null
+          updated_at: string | null
+          user_id: string
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          category: string
+          contact_person?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          phone?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id: string
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          category?: string
+          contact_person?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       guests: {
         Row: {
           address: string | null
@@ -146,6 +233,81 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      site_sections: {
+        Row: {
+          background_image_url: string | null
+          content: string | null
+          created_at: string
+          id: string
+          section_order: number
+          section_type: string | null
+          site_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          background_image_url?: string | null
+          content?: string | null
+          created_at?: string
+          id?: string
+          section_order?: number
+          section_type?: string | null
+          site_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          background_image_url?: string | null
+          content?: string | null
+          created_at?: string
+          id?: string
+          section_order?: number
+          section_type?: string | null
+          site_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      task_vendor_assignments: {
+        Row: {
+          assigned_at: string | null
+          id: string
+          notes: string | null
+          task_id: string
+          vendor_id: string
+        }
+        Insert: {
+          assigned_at?: string | null
+          id?: string
+          notes?: string | null
+          task_id: string
+          vendor_id: string
+        }
+        Update: {
+          assigned_at?: string | null
+          id?: string
+          notes?: string | null
+          task_id?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "task_vendor_assignments_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_vendor_assignments_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "global_vendors"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       tasks: {
         Row: {
@@ -250,7 +412,39 @@ export type Database = {
           },
         ]
       }
-
+      wedding_sites: {
+        Row: {
+          created_at: string
+          id: string
+          published: boolean | null
+          site_title: string | null
+          site_url: string | null
+          theme_color: string | null
+          updated_at: string
+          wedding_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          published?: boolean | null
+          site_title?: string | null
+          site_url?: string | null
+          theme_color?: string | null
+          updated_at?: string
+          wedding_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          published?: boolean | null
+          site_title?: string | null
+          site_url?: string | null
+          theme_color?: string | null
+          updated_at?: string
+          wedding_id?: string
+        }
+        Relationships: []
+      }
       weddings: {
         Row: {
           bride_name: string | null

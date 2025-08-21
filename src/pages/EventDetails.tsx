@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PlanejamentoTab from "./event/PlanejamentoTab";
 import GuestsTab from "./event/GuestsTab";
 import VendorsTab from "./event/VendorsTab";
+import SiteTab from "./event/SiteTab";
 import { t } from "@/lib/translations";
 
 export default function EventDetails() {
@@ -45,6 +46,12 @@ export default function EventDetails() {
 									{t('organization')}
 								</TabsTrigger>
 								<TabsTrigger 
+									value="site" 
+									className="data-[state=active]:bg-brand data-[state=active]:text-white data-[state=active]:shadow-sm flex-1 sm:flex-none"
+								>
+									{t('site')}
+								</TabsTrigger>
+								<TabsTrigger 
 									value="guests" 
 									className="data-[state=active]:bg-brand data-[state=active]:text-white data-[state=active]:shadow-sm flex-1 sm:flex-none"
 								>
@@ -60,6 +67,9 @@ export default function EventDetails() {
 						</div>
 						<TabsContent value="organization" className="p-4">
 							{event?.id && <PlanejamentoTab weddingId={event.id} eventDate={event.wedding_date} />}
+						</TabsContent>
+						<TabsContent value="site" className="p-4">
+							{event?.id && <SiteTab weddingId={event.id} brideName={event.bride_name} groomName={event.groom_name} />}
 						</TabsContent>
 						<TabsContent value="guests" className="p-4">
 							{event?.id && <GuestsTab weddingId={event.id} />}

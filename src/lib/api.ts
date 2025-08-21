@@ -29,7 +29,7 @@ async function validateWeddingAccess(weddingId: string, userId: string): Promise
     .select('id')
     .eq('id', weddingId)
     .eq('user_id', userId)
-    .single();
+    .maybeSingle();
   return !!data;
 }
 
@@ -200,7 +200,7 @@ export const api = {
       .from('tasks')
       .select('wedding_id')
       .eq('id', taskId)
-      .single();
+      .maybeSingle();
     
     if (!task) throw new Error('Task not found');
     
@@ -229,7 +229,7 @@ export const api = {
       .from('tasks')
       .select('wedding_id')
       .eq('id', taskId)
-      .single();
+      .maybeSingle();
     
     if (!task) throw new Error('Task not found');
     
@@ -304,7 +304,7 @@ export const api = {
       .from('guests')
       .select('wedding_id')
       .eq('id', guestId)
-      .single();
+      .maybeSingle();
     
     if (!guest) throw new Error('Guest not found');
     
@@ -378,7 +378,7 @@ export const api = {
       .from('vendors')
       .select('wedding_id')
       .eq('id', vendorId)
-      .single();
+      .maybeSingle();
     
     if (!vendor) throw new Error('Vendor not found');
     
@@ -393,6 +393,5 @@ export const api = {
     if (error) throw error;
     return true;
   },
-
 
 };
