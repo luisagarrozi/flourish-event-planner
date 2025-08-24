@@ -22,11 +22,11 @@ function App() {
 		<QueryClientProvider client={queryClient}>
 			<Router>
 				<Routes>
-					{/* Public wedding site route */}
-					<Route path="/:siteUrl" element={<WeddingSite />} />
-					
 					{/* Protected admin routes */}
 					<Route path="/*" element={<AdminLayout />} />
+					
+					{/* Public wedding site route - only for specific patterns */}
+					<Route path="/site/:siteUrl" element={<WeddingSite />} />
 				</Routes>
 				<Toaster />
 			</Router>
