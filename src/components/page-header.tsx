@@ -30,6 +30,10 @@ export function PageHeader({ isMobile = false }: PageHeaderProps) {
 
 	const navigation = [
 		{
+			title: t("events"),
+			href: "/",
+		},
+		{
 			title: t("tasks"),
 			href: "/tasks",
 		},

@@ -27,27 +27,126 @@ interface GiftPreset {
   gift_value: number;
 }
 
+// Preset tasks data (same as in PlanejamentoTab)
+const PRESET_TASKS = [
+	// 12 meses antes
+	{ title: "Escolher Espaço Cerimônia", monthsBefore: 12, category: "Local" },
+	{ title: "Escolher Espaço da Recepção e Festa", monthsBefore: 12, category: "Local" },
+	{ title: "Escolher Buffet", monthsBefore: 12, category: "Local" },
+	{ title: "Fazer Site", monthsBefore: 12, category: "Outros" },
+	{ title: "Contratar Assessoria e Cerimonial", monthsBefore: 12, category: "Outros" },
+	{ title: "Alimentação Staffs", monthsBefore: 12, category: "Local" },
+	
+	// 11 meses antes
+	{ title: "Contratar Decoração", monthsBefore: 11, category: "Local" },
+	
+	// 10 meses antes
+	{ title: "Contratar Fotografia", monthsBefore: 10, category: "Outros" },
+	{ title: "Contratar Filmagem", monthsBefore: 10, category: "Outros" },
+	
+	// 9 meses antes
+	{ title: "Contratar Músicos para Cerimônia", monthsBefore: 9, category: "Outros" },
+	{ title: "Contratar DJ", monthsBefore: 9, category: "Outros" },
+	{ title: "Alugar Vestido", monthsBefore: 9, category: "Noiva" },
+	{ title: "Maquiagem e Cabelo", monthsBefore: 9, category: "Noiva" },
+	{ title: "Contratar Pista de Led", monthsBefore: 9, category: "Local" },
+	{ title: "Contratar Telão", monthsBefore: 9, category: "Local" },
+	
+	// 8 meses antes
+	{ title: "Contratar Banda", monthsBefore: 8, category: "Outros" },
+	{ title: "Contratar Celebrante", monthsBefore: 8, category: "Outros" },
+	
+	// 7 meses antes
+	{ title: "Alugar Acessórios", monthsBefore: 7, category: "Noiva" },
+	{ title: "Contratar Doces", monthsBefore: 7, category: "Local" },
+	{ title: "Contratar Bolo", monthsBefore: 7, category: "Local" },
+	{ title: "Contratar Bolo Fake", monthsBefore: 7, category: "Local" },
+	{ title: "Contratar Bartender", monthsBefore: 7, category: "Local" },
+	
+	// 6 meses antes
+	{ title: "Contratar Bebidas e Garçons", monthsBefore: 6, category: "Local" },
+	{ title: "Contratar Bem-Casados", monthsBefore: 6, category: "Local" },
+	{ title: "Traje Noivo", monthsBefore: 6, category: "Noivo" },
+	{ title: "Entrega Convites", monthsBefore: 6, category: "Outros" },
+	{ title: "Fazer lista presentes Site", monthsBefore: 6, category: "Outros" },
+	
+	// 5 meses antes
+	{ title: "Contratar Iluminação", monthsBefore: 5, category: "Local" },
+	{ title: "Contratar Animação", monthsBefore: 5, category: "Outros" },
+	{ title: "Tenda", monthsBefore: 5, category: "Local" },
+	
+	// 4 meses antes
+	{ title: "Contratar Carro para Noiva", monthsBefore: 4, category: "Noiva" },
+	{ title: "Comprar Lembrancinhas", monthsBefore: 4, category: "Outros" },
+	{ title: "Contratar Gerador de Energia", monthsBefore: 4, category: "Local" },
+	{ title: "Contratar Recreadores", monthsBefore: 4, category: "Outros" },
+	
+	// 3 meses antes
+	{ title: "Comprar Chinelos", monthsBefore: 3, category: "Noiva" },
+	{ title: "Contratar Lanche da Madrugada", monthsBefore: 3, category: "Local" },
+	{ title: "Aluguel de Louças", monthsBefore: 3, category: "Local" },
+	{ title: "Marcar Pré Wedding", monthsBefore: 3, category: "Outros" },
+	{ title: "Degustações", monthsBefore: 3, category: "Local" },
+	{ title: "Entrega Convites Convidados", monthsBefore: 3, category: "Outros" },
+	{ title: "Reservar Hotel Perto do Local da Cerimônia", monthsBefore: 3, category: "Outros" },
+	
+	// 2 meses antes
+	{ title: "Contratar Papelaria", monthsBefore: 2, category: "Outros" },
+	{ title: "Comprar Porta Aliança", monthsBefore: 2, category: "Outros" },
+	{ title: "Comprar Topo de Bolo", monthsBefore: 2, category: "Local" },
+	{ title: "Contratar Coreógrafa", monthsBefore: 2, category: "Outros" },
+	{ title: "Escolher Modelo Bouquet", monthsBefore: 2, category: "Noiva" },
+	
+	// 1 mês antes
+	{ title: "Comprar Saída Igreja", monthsBefore: 1, category: "Noiva" },
+	{ title: "Kit Toilet", monthsBefore: 1, category: "Noiva" },
+	{ title: "Barbeiro", monthsBefore: 1, category: "Noivo" },
+	{ title: "Comprar ou Polir Alianças", monthsBefore: 1, category: "Outros" },
+	{ title: "Fazer Lista e Importar Pro Site", monthsBefore: 1, category: "Outros" },
+	{ title: "Contratar Serviços Gerais", monthsBefore: 1, category: "Outros" },
+	{ title: "Contratar Seguranças", monthsBefore: 1, category: "Local" },
+	{ title: "Fazer Mapa de Mesa", monthsBefore: 1, category: "Outros" },
+	{ title: "Escolher Músicas Principais", monthsBefore: 1, category: "Outros" },
+	{ title: "Escolher Ordem de Padrinhos", monthsBefore: 1, category: "Outros" },
+	
+	// 2 semanas antes
+	{ title: "Teste de Cabelo e Maquiagem", monthsBefore: 0.5, category: "Noiva" },
+];
+
+// Preset gifts data (same as in GiftsTab)
+const PRESET_GIFTS = [
+	{ gift_name: "Jogo de Panelas Tramontina", gift_description: "Jogo de panelas profissional com 5 peças", gift_amount: 2, gift_value: 299.90 },
+	{ gift_name: "Mixer Oster", gift_description: "Mixer elétrico para preparo de bebidas", gift_amount: 3, gift_value: 89.90 },
+	{ gift_name: "Jogo de Toalhas", gift_description: "Jogo de toalhas de banho e rosto", gift_amount: 4, gift_value: 159.90 },
+	{ gift_name: "Conjunto de Copos", gift_description: "Conjunto de 6 copos de vidro", gift_amount: 2, gift_value: 79.90 },
+	{ gift_name: "Jogo de Pratos", gift_description: "Jogo de pratos para 6 pessoas", gift_amount: 2, gift_value: 199.90 },
+];
+
 export default function Models() {
   const [activeTab, setActiveTab] = useState("tasks");
   const [searchQuery, setSearchQuery] = useState("");
   
-  // Task presets state
-  const [taskPresets, setTaskPresets] = useState<TaskPreset[]>([
-    { id: "1", title: "Escolher Espaço Cerimônia", category: "Local", monthsBefore: 12 },
-    { id: "2", title: "Contratar Fotografia", category: "Outros", monthsBefore: 10 },
-    { id: "3", title: "Contratar DJ", category: "Outros", monthsBefore: 9 },
-    { id: "4", title: "Alugar Vestido", category: "Noiva", monthsBefore: 9 },
-    { id: "5", title: "Contratar Bolo", category: "Local", monthsBefore: 7 },
-  ]);
+  // Task presets state - initialize with the actual preset data
+  const [taskPresets, setTaskPresets] = useState<TaskPreset[]>(() => 
+    PRESET_TASKS.map((task, index) => ({
+      id: (index + 1).toString(),
+      title: task.title,
+      category: task.category,
+      monthsBefore: task.monthsBefore,
+      description: ""
+    }))
+  );
   
-  // Gift presets state
-  const [giftPresets, setGiftPresets] = useState<GiftPreset[]>([
-    { id: "1", gift_name: "Jogo de Panelas Tramontina", gift_description: "Jogo de panelas profissional com 5 peças", gift_amount: 2, gift_value: 299.90 },
-    { id: "2", gift_name: "Mixer Oster", gift_description: "Mixer elétrico para preparo de bebidas", gift_amount: 3, gift_value: 89.90 },
-    { id: "3", gift_name: "Jogo de Toalhas", gift_description: "Jogo de toalhas de banho e rosto", gift_amount: 4, gift_value: 159.90 },
-    { id: "4", gift_name: "Conjunto de Copos", gift_description: "Conjunto de 6 copos de vidro", gift_amount: 2, gift_value: 79.90 },
-    { id: "5", gift_name: "Jogo de Pratos", gift_description: "Jogo de pratos para 6 pessoas", gift_amount: 2, gift_value: 199.90 },
-  ]);
+  // Gift presets state - initialize with the actual preset data
+  const [giftPresets, setGiftPresets] = useState<GiftPreset[]>(() => 
+    PRESET_GIFTS.map((gift, index) => ({
+      id: (index + 1).toString(),
+      gift_name: gift.gift_name,
+      gift_description: gift.gift_description,
+      gift_amount: gift.gift_amount,
+      gift_value: gift.gift_value
+    }))
+  );
 
   // Form states
   const [isAddingTask, setIsAddingTask] = useState(false);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { getEvent } from "@/services/events";
 import type { Tables } from "@/integrations/supabase/types";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,7 +13,11 @@ import { t } from "@/lib/translations";
 
 export default function EventDetails() {
 	const { id } = useParams();
+	const [searchParams] = useSearchParams();
 	const [event, setEvent] = useState<Tables<'weddings'> | null>(null);
+	
+	// Get the tab from URL query parameter, default to "organization"
+	const defaultTab = searchParams.get("tab") || "organization";
 
 	useEffect(() => {
 		if (!id) return;
@@ -37,7 +41,7 @@ export default function EventDetails() {
 			
 			<Card className="shadow-card border-0">
 				<CardContent className="p-0">
-					<Tabs defaultValue="organization" className="w-full">
+					<Tabs defaultValue={defaultTab} className="w-full">
 						<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 border-b border-charcoal-soft/20">
 							<TabsList className="bg-stone border border-charcoal-soft/20 w-full sm:w-auto">
 								<TabsTrigger 

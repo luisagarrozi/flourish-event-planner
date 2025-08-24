@@ -326,7 +326,7 @@ export default function PlanejamentoTab({ weddingId, eventDate }: Props) {
 	};
 
 	return (
-		<div className="space-y-4 sm:space-y-6">
+		<div className="space-y-4 sm:space-y-6 max-w-full overflow-hidden">
 			<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 				<div>
 					<h2 className="text-xl sm:text-2xl font-bold text-charcoal">{t("organization")}</h2>
@@ -356,7 +356,7 @@ export default function PlanejamentoTab({ weddingId, eventDate }: Props) {
 					<h3 className="text-lg font-semibold text-charcoal mb-4">
 						{editingTask ? "Editar Tarefa" : t("addNewTask")}
 					</h3>
-					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-full">
 						<div className="space-y-2">
 							<Label className="text-charcoal font-medium">{t("title")}</Label>
 							<Input 
@@ -436,7 +436,7 @@ export default function PlanejamentoTab({ weddingId, eventDate }: Props) {
 			) : sortedTasks.length > 0 ? (
 				<div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
 					{/* Desktop Table */}
-					<div className="hidden sm:block">
+					<div className="hidden sm:block overflow-x-auto">
 						<Table>
 							<TableHeader>
 								<TableRow className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
@@ -496,10 +496,10 @@ export default function PlanejamentoTab({ weddingId, eventDate }: Props) {
 									</button>
 								</TableCell>
 								<TableCell className={`py-4 ${task.completed ? 'line-through text-gray-400' : 'text-gray-800'}`}>
-									<div>
-										<div className="font-medium">{task.title}</div>
+									<div className="min-w-0">
+										<div className="font-medium truncate">{task.title}</div>
 										{task.description && (
-											<div className="text-sm text-gray-500 mt-1">
+											<div className="text-sm text-gray-500 mt-1 line-clamp-2">
 												{task.description}
 											</div>
 										)}
@@ -560,7 +560,7 @@ export default function PlanejamentoTab({ weddingId, eventDate }: Props) {
 					{/* Mobile Cards */}
 					<div className="sm:hidden space-y-3">
 						{sortedTasks.map((task) => (
-							<div key={task.id} className="bg-white border border-gray-200 rounded-lg p-4 space-y-3">
+							<div key={task.id} className="bg-white border border-gray-200 rounded-lg p-4 space-y-3 overflow-hidden">
 								<div className="flex items-start justify-between">
 									<div className="flex items-center gap-3 flex-1">
 										<button 
@@ -603,18 +603,18 @@ export default function PlanejamentoTab({ weddingId, eventDate }: Props) {
 										</Button>
 									</div>
 								</div>
-								<div className="flex flex-wrap gap-2">
+								<div className="flex flex-wrap gap-2 min-w-0">
 									{task.due_date && (
-										<span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 rounded-md text-xs">
-											<Calendar className="w-3 h-3" />
+										<span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 rounded-md text-xs whitespace-nowrap">
+											<Calendar className="w-3 h-3 flex-shrink-0" />
 											{new Date(task.due_date).toLocaleDateString('pt-BR')}
 										</span>
 									)}
-									<span className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(task.priority)}`}>
+									<span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${getPriorityColor(task.priority)}`}>
 										{getPriorityText(task.priority)}
 									</span>
 									{task.category && (
-										<span className="inline-flex items-center px-2 py-1 bg-purple-50 text-purple-700 rounded-md text-xs">
+										<span className="inline-flex items-center px-2 py-1 bg-purple-50 text-purple-700 rounded-md text-xs truncate max-w-full">
 											{task.category}
 										</span>
 									)}
