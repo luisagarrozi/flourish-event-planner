@@ -291,7 +291,7 @@ export default function PlanejamentoTab({ weddingId, eventDate }: Props) {
 				due_date: calculateDueDate(eventDate, preset.monthsBefore),
 				priority: "medium" as const,
 				category: preset.category,
-				description: `Tarefa pré-definida: ${preset.title}`,
+				description: "",
 				completed: false,
 			}));
 

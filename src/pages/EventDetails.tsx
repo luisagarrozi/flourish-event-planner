@@ -8,6 +8,7 @@ import PlanejamentoTab from "./event/PlanejamentoTab";
 import GuestsTab from "./event/GuestsTab";
 import VendorsTab from "./event/VendorsTab";
 import SiteTab from "./event/SiteTab";
+import GiftsTab from "./event/GiftsTab";
 import { t } from "@/lib/translations";
 
 export default function EventDetails() {
@@ -63,6 +64,12 @@ export default function EventDetails() {
 								>
 									{t('vendors')}
 								</TabsTrigger>
+								<TabsTrigger 
+									value="gifts" 
+									className="data-[state=active]:bg-brand data-[state=active]:text-white data-[state=active]:shadow-sm flex-1 sm:flex-none"
+								>
+									{t('gifts')}
+								</TabsTrigger>
 							</TabsList>
 						</div>
 						<TabsContent value="organization" className="p-4">
@@ -76,6 +83,9 @@ export default function EventDetails() {
 						</TabsContent>
 						<TabsContent value="vendors" className="p-4">
 							{event?.id && <VendorsTab weddingId={event.id} />}
+						</TabsContent>
+						<TabsContent value="gifts" className="p-4">
+							{event?.id && <GiftsTab weddingId={event.id} />}
 						</TabsContent>
 					</Tabs>
 				</CardContent>

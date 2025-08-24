@@ -30,7 +30,7 @@ export function useApiCache<T>(
     fetchFnRef.current = fetchFn;
   }, [fetchFn]);
 
-  const fetchData = async (forceRefresh = false) => {
+  const fetchData = useCallback(async (forceRefresh = false) => {
     console.log("🔍 useApiCache: fetchData called with key =", key, "forceRefresh =", forceRefresh);
     if (!enabled) {
       console.log("🔍 useApiCache: Hook disabled, returning");
@@ -111,11 +111,11 @@ export function useApiCache<T>(
     } finally {
       setLoading(false);
     }
-  };
+  }, [key, enabled, cacheDuration]);
 
   const refresh = useCallback(() => {
     return fetchData(true);
-  }, []);
+  }, [fetchData]);
 
   const clearCache = useCallback(() => {
     cacheRef.current.delete(key);
@@ -125,7 +125,7 @@ export function useApiCache<T>(
   useEffect(() => {
     console.log("🔍 useApiCache: useEffect triggered for key =", key);
     fetchData();
-  }, [key, enabled]);
+  }, [key, enabled, fetchData]);
 
   useEffect(() => {
     return () => {

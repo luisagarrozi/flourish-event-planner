@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Calendar, CheckSquare, Users, Home } from "lucide-react";
+import { Calendar, CheckSquare, FileText, Home } from "lucide-react";
 import { t } from "@/lib/translations";
 import BrandLogo from "@/components/BrandLogo";
 
@@ -13,13 +13,6 @@ export function AppSidebar({ className }: SidebarProps) {
 
 	const navigation = [
 		{
-			title: t("events"),
-			label: "events",
-			icon: Home,
-			variant: "ghost" as const,
-			href: "/",
-		},
-		{
 			title: t("tasks"),
 			label: "tasks",
 			icon: CheckSquare,
@@ -27,11 +20,11 @@ export function AppSidebar({ className }: SidebarProps) {
 			href: "/tasks",
 		},
 		{
-			title: t("guests"),
-			label: "guests",
-			icon: Users,
+			title: t("models"),
+			label: "models",
+			icon: FileText,
 			variant: "ghost" as const,
-			href: "/guests",
+			href: "/models",
 		},
 	];
 

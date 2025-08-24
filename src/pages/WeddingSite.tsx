@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
-interface WeddingSite extends Tables<'wedding_sites'> {}
-interface SiteSection extends Tables<'site_sections'> {}
-interface Wedding extends Tables<'weddings'> {}
+type WeddingSite = Tables<'wedding_sites'>;
+type SiteSection = Tables<'site_sections'>;
+type Wedding = Tables<'weddings'>;
 
 export default function WeddingSite() {
   const { siteUrl } = useParams();

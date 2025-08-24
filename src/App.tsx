@@ -9,8 +9,7 @@ import Index from "@/pages/Index";
 import Dashboard from "@/pages/Dashboard";
 import Tasks from "@/pages/Tasks";
 import Budget from "@/pages/Budget";
-import Guests from "@/pages/Guests";
-import Events from "@/pages/Events";
+import Models from "@/pages/Models";
 import NotFound from "@/pages/NotFound";
 import EventDetails from "@/pages/EventDetails";
 import WeddingSite from "@/pages/WeddingSite";
@@ -50,7 +49,7 @@ function AdminLayout() {
 						<Route path="/dashboard" element={<Dashboard />} />
 						<Route path="/tasks" element={<Tasks />} />
 						<Route path="/budget" element={<Budget />} />
-						<Route path="/guests" element={<Guests />} />
+						<Route path="/models" element={<Models />} />
 						<Route path="/events/:id" element={<EventDetails />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>

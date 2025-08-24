@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,8 +16,8 @@ interface SiteTabProps {
   groomName?: string | null;
 }
 
-interface WeddingSite extends Tables<'wedding_sites'> {}
-interface SiteSection extends Tables<'site_sections'> {}
+type WeddingSite = Tables<'wedding_sites'>;
+type SiteSection = Tables<'site_sections'>;
 
 export default function SiteTab({ weddingId, brideName, groomName }: SiteTabProps) {
   const [site, setSite] = useState<WeddingSite | null>(null);
@@ -27,16 +27,16 @@ export default function SiteTab({ weddingId, brideName, groomName }: SiteTabProp
   const { toast } = useToast();
 
   // Generate default URL from names
-  const generateDefaultUrl = () => {
+  const generateDefaultUrl = useCallback(() => {
     if (brideName && groomName) {
       const brideSlug = brideName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
       const groomSlug = groomName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
       return `${brideSlug}-e-${groomSlug}`;
     }
     return '';
-  };
+  }, [brideName, groomName]);
 
-  const loadSiteData = async () => {
+  const loadSiteData = useCallback(async () => {
     try {
       // Load wedding site
       const { data: siteData } = await supabase
@@ -103,11 +103,11 @@ export default function SiteTab({ weddingId, brideName, groomName }: SiteTabProp
     } finally {
       setLoading(false);
     }
-  };
+  }, [weddingId, brideName, groomName, toast, generateDefaultUrl]);
 
   useEffect(() => {
     loadSiteData();
-  }, [weddingId]);
+  }, [weddingId, loadSiteData]);
 
   const updateSite = async (updates: Partial<WeddingSite>) => {
     if (!site) return;
@@ -262,17 +262,18 @@ export default function SiteTab({ weddingId, brideName, groomName }: SiteTabProp
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Switch
+              checked={site?.published || false}
+              onCheckedChange={(checked) => updateSite({ published: checked })}
+              className="border border-brand/30 [&>span]:bg-[hsl(44_27%_60%_/_0.5)] [&>span]:ml-[2px] bg-[hsl(44_27%_60%_/_0.3)] data-[state=checked]:bg-[hsl(44_27%_60%_/_0.3)] data-[state=checked]:[&>span]:ml-0 data-[state=checked]:[&>span]:mr-[2px]"
+            />
             <div>
               <Label>Site Publicado</Label>
               <p className="text-sm text-muted-foreground">
                 {site?.published ? 'Seu site está público e visível para os convidados' : 'Seu site está em modo de rascunho'}
               </p>
             </div>
-            <Switch
-              checked={site?.published || false}
-              onCheckedChange={(checked) => updateSite({ published: checked })}
-            />
           </div>
         </CardContent>
       </Card>

@@ -30,16 +30,12 @@ export function PageHeader({ isMobile = false }: PageHeaderProps) {
 
 	const navigation = [
 		{
-			title: t("events"),
-			href: "/",
-		},
-		{
 			title: t("tasks"),
 			href: "/tasks",
 		},
 		{
-			title: t("guests"),
-			href: "/guests",
+			title: t("models"),
+			href: "/models",
 		},
 	];
 
@@ -64,13 +60,13 @@ export function PageHeader({ isMobile = false }: PageHeaderProps) {
 				
 				{/* Mobile navigation tabs */}
 				{isMobile && (
-					<div className="flex items-center gap-1 min-w-0 flex-1 justify-center">
+					<div className="flex items-center gap-1 min-w-0 flex-1 justify-center overflow-x-auto scrollbar-hide">
 						{navigation.map((item) => (
 							<Link
 								key={item.href}
 								to={item.href}
 								onClick={() => setSidebarOpen(false)}
-								className={`px-2 sm:px-3 py-2 text-xs sm:text-sm rounded-md transition-colors shrink-0 ${
+								className={`px-2 sm:px-3 py-2 text-xs sm:text-sm rounded-md transition-colors shrink-0 whitespace-nowrap ${
 									location.pathname === item.href
 										? "bg-brand/15 text-charcoal border border-brand/30"
 										: "text-charcoal-soft hover:text-charcoal hover:bg-beige"
